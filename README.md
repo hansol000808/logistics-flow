@@ -2,7 +2,7 @@
 
 2022년 2학기에 수행한 탐색적 시각화 연구를 웹에서 살펴볼 수 있도록 재구성한 아카이브입니다. 당시 선택한 도로 구간과 지방우정청 권역별 배달물량을 살펴보며, 지하물류체계 도입을 후속 검토할 위치를 탐색합니다.
 
-**[사이트 열기](https://hansol000808.github.io/underground-logistics-2022/)** · 연구자 HAN JAEHYEOK
+**[사이트 열기](https://hansol000808.github.io/logistics-flow/)** · 연구자 HAN JAEHYEOK
 
 ## 지도에서 살펴볼 수 있는 것
 

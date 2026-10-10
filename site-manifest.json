@@ -1,6 +1,6 @@
 {
-  "project": "underground-logistics-2022",
-  "built_at_utc": "2026-10-10T17:11:06.167966+00:00",
+  "project": "logistics-flow",
+  "built_at_utc": "2026-10-10T17:17:23.184699+00:00",
   "files": [
     {
       "path": ".gitignore",
@@ -19,8 +19,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6161,
-      "sha256": "c9ef149f5931d5a66f11a0ea9249ec6f77bbe6c2d3a91212c7becddfa80edbde"
+      "bytes": 6149,
+      "sha256": "cd180b313e8e12217a9c60d3700968936613271173cc599222263a9452672949"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -29,8 +29,8 @@
     },
     {
       "path": "app.js",
-      "bytes": 17426,
-      "sha256": "3534371eb338f3b740cc4df6b1eb2eab2a2a5c9ba9574f1671e5f2edc5505d2c"
+      "bytes": 17414,
+      "sha256": "a296596fcee8a4779552402626959752aace6072c94dbf3949fc9e03600b8093"
     },
     {
       "path": "data/research.json",
@@ -44,8 +44,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 13206,
-      "sha256": "e0535f6fa3a0018ec96946669e6037080da3df9fbeb2a2340a88937e4dd231f0"
+      "bytes": 13170,
+      "sha256": "fa0c0ec93c9754ee658536c14ec5c9950ac509141382499e3e36ca1db3bdaaa5"
     },
     {
       "path": "requirements.txt",

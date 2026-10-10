@@ -245,7 +245,7 @@
     } catch (error) {
       $('#selection-detail').innerHTML = '<h3 id="detail-title">자료를 불러오지 못했습니다.</h3><p class="detail-note">네트워크 연결을 확인한 뒤 페이지를 새로고침해 주세요.</p>';
       $('#section-list').innerHTML = '<tr><td colspan="3" class="table-empty">자료를 불러올 수 없습니다. 연구 방법과 출처는 GitHub 저장소에서도 확인할 수 있습니다.</td></tr>';
-      $('#source-list').innerHTML = '<p class="notice">출처 정보는 <a href="https://github.com/hansol000808/underground-logistics-2022">GitHub 저장소</a>에서 확인할 수 있습니다.</p>';
+      $('#source-list').innerHTML = '<p class="notice">출처 정보는 <a href="https://github.com/hansol000808/logistics-flow">GitHub 저장소</a>에서 확인할 수 있습니다.</p>';
       $$('.mode-button, .map-view-controls button').forEach((button) => {button.disabled = true;});
       $('#section-search').disabled = true;
       showMapStatus('데이터를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.');
