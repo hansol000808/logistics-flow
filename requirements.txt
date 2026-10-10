@@ -1,0 +1,4 @@
+# Only required for local reconstruction, not for serving the website.
+numpy==2.3.5
+pandas==3.0.1
+openpyxl==3.1.5

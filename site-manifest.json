@@ -1,0 +1,121 @@
+{
+  "project": "underground-logistics-2022",
+  "built_at_utc": "2026-10-10T17:11:06.167966+00:00",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 647,
+      "sha256": "713c4d6fa8d8761a2b252a10a295690133516c9686dbce8621cdf381dc9a42a6"
+    },
+    {
+      "path": ".nojekyll",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "DATA_SOURCES.md",
+      "bytes": 6170,
+      "sha256": "d3cf2dbf993ef22c99ec2c0f46575ea3370d0de56514bebbfad39f6057eca5b5"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6161,
+      "sha256": "c9ef149f5931d5a66f11a0ea9249ec6f77bbe6c2d3a91212c7becddfa80edbde"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 1572,
+      "sha256": "1b7c943809b8179c527aa3fe5ba09e0f2926da9c8d91355a66904d7141a850bc"
+    },
+    {
+      "path": "app.js",
+      "bytes": 17426,
+      "sha256": "3534371eb338f3b740cc4df6b1eb2eab2a2a5c9ba9574f1671e5f2edc5505d2c"
+    },
+    {
+      "path": "data/research.json",
+      "bytes": 28101,
+      "sha256": "650e88ec4242784ab1e39eb26b4e2245eb47f513a484a5437b67cd33806027bd"
+    },
+    {
+      "path": "favicon.svg",
+      "bytes": 316,
+      "sha256": "eabb7961ceba79b42eaac340bebb9668f4dd2dd8a14fbd560bc5951eb3378ae8"
+    },
+    {
+      "path": "index.html",
+      "bytes": 13206,
+      "sha256": "e0535f6fa3a0018ec96946669e6037080da3df9fbeb2a2340a88937e4dd231f0"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 114,
+      "sha256": "23e5d17477491d18f665b27f4c7aad10456284e8593e7b6371f672434c147fa5"
+    },
+    {
+      "path": "scripts/build_data.py",
+      "bytes": 16683,
+      "sha256": "49cc389d4250a9cb7d7920ad535559fa452e2653596868f18275beeba383802e"
+    },
+    {
+      "path": "styles.css",
+      "bytes": 24580,
+      "sha256": "0f48c9c7fb1365980bb45cc2044afd7926a563a39fe8c80accf17e42593b0af2"
+    },
+    {
+      "path": "vendor/leaflet/LICENSE",
+      "bytes": 1395,
+      "sha256": "53e8dc25862014e4324741ca18fbe3611e11d42ef69f59f86ea8c5389647d4cb"
+    },
+    {
+      "path": "vendor/leaflet/images/layers-2x.png",
+      "bytes": 1259,
+      "sha256": "066daca850d8ffbef007af00b06eac0015728dee279c51f3cb6c716df7c42edf"
+    },
+    {
+      "path": "vendor/leaflet/images/layers.png",
+      "bytes": 696,
+      "sha256": "1dbbe9d028e292f36fcba8f8b3a28d5e8932754fc2215b9ac69e4cdecf5107c6"
+    },
+    {
+      "path": "vendor/leaflet/images/marker-icon-2x.png",
+      "bytes": 2464,
+      "sha256": "00179c4c1ee830d3a108412ae0d294f55776cfeb085c60129a39aa6fc4ae2528"
+    },
+    {
+      "path": "vendor/leaflet/images/marker-icon.png",
+      "bytes": 1466,
+      "sha256": "574c3a5cca85f4114085b6841596d62f00d7c892c7b03f28cbfa301deb1dc437"
+    },
+    {
+      "path": "vendor/leaflet/images/marker-shadow.png",
+      "bytes": 618,
+      "sha256": "264f5c640339f042dd729062cfc04c17f8ea0f29882b538e3848ed8f10edb4da"
+    },
+    {
+      "path": "vendor/leaflet/leaflet.css",
+      "bytes": 14806,
+      "sha256": "a7837102824184820dfa198d1ebcd109ff6d0ff9a2672a074b9a1b4d147d04c6"
+    },
+    {
+      "path": "vendor/leaflet/leaflet.js",
+      "bytes": 147552,
+      "sha256": "db49d009c841f5ca34a888c96511ae936fd9f5533e90d8b2c4d57596f4e5641a"
+    },
+    {
+      "path": "vendor/leaflet/leaflet.js.map",
+      "bytes": 225544,
+      "sha256": "600a10dc5cd110de0699510d322afcbe01c7ca90b4c5f48adc20314c70aac753"
+    }
+  ],
+  "exclusions": [
+    "Original datasets and notebooks",
+    "CJ and OD values or visualizations",
+    "Personal and classroom materials",
+    "Local audit and credentials"
+  ],
+  "external_services": [
+    "OpenStreetMap standard raster tiles"
+  ],
+  "notes": "Manifest excludes itself and Git metadata."
+}

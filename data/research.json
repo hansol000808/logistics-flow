@@ -1,0 +1,1175 @@
+{
+  "schemaVersion": 1,
+  "publicationReady": true,
+  "project": {
+    "title": "지하물류체계 구축을 위한 물동량 집중 구간 탐구",
+    "year": 2022,
+    "scope": "2022년 2학기 탐색적 시각화 연구 아카이브"
+  },
+  "sources": [
+    {
+      "id": "highway2021",
+      "title": "한국도로공사 2021년 수시교통량",
+      "period": "2021",
+      "unit": "대 (수시조사 시간=계, 기점·종점 합계)",
+      "url": "https://data.ex.co.kr/portal/docu/docuList?datasetId=19",
+      "policyUrl": "https://data.ex.co.kr/portal/guide/publicDataPolicy",
+      "status": "reviewed_for_publication",
+      "licenseNote": "공식 목록의 2021년 수시교통량.csv(fileId=705) 및 공공데이터 자유활용 정책 확인. 다운로드 서버 오류로 공식 파일과 바이트 대조는 미완료.",
+      "reviewedAt": "2026-10-11",
+      "rawPublished": false,
+      "derivedDataPublished": true,
+      "sha256": "a2fffc2fdece0ca631a790ebe80a532d5c36730ec12242101e9c774b2cbcd118"
+    },
+    {
+      "id": "freightOD2020",
+      "title": "2020년 지역 간 화물 OD 수송실적",
+      "period": "2020",
+      "unit": "톤/년",
+      "url": "https://www.nlic.go.kr/",
+      "status": "withheld_pending_review",
+      "licenseNote": "당시 원자료의 공개 이용조건 확인 전 수치 공개 보류.",
+      "rawPublished": false,
+      "derivedDataPublished": false
+    },
+    {
+      "id": "postal2020",
+      "title": "우체국물류지원단 총괄국별 배달물량 (20210831 과거 파일)",
+      "period": "2020",
+      "unit": "개",
+      "url": "https://www.data.go.kr/data/15040740/fileData.do",
+      "archiveUrl": "https://www.data.go.kr/tcs/dss/selectDpkDetailInfo.do?publicDataDetailPk=uddi%3A05cfada8-fc6b-49df-b2a6-9578ace72f90&publicDataHistSn=1",
+      "status": "reviewed_for_publication",
+      "licenseNote": "20210831 과거 자료 항목의 이용허락범위 제한 없음 확인. 공식 과거 CSV와 로컬 파일의 SHA256 일치.",
+      "reviewedAt": "2026-10-11",
+      "archiveSnapshot": "20210831",
+      "rawPublished": false,
+      "derivedDataPublished": true,
+      "sha256": "0e05429f65f471a1716fe27580c7a3ea6b36f853f4047f46b9d46e7355f5cb70"
+    }
+  ],
+  "regions": [
+    {
+      "id": "서울",
+      "name": "서울",
+      "center": [
+        37.56,
+        126.98
+      ],
+      "members": [
+        "서울"
+      ],
+      "postal2020": 38728677,
+      "postalSourceId": "postal2020",
+      "postalOffice": "서울지방우정청"
+    },
+    {
+      "id": "경인",
+      "name": "경인",
+      "center": [
+        37.3,
+        126.98
+      ],
+      "members": [
+        "경기",
+        "인천"
+      ],
+      "postal2020": 66155052,
+      "postalSourceId": "postal2020",
+      "postalOffice": "경인지방우정청"
+    },
+    {
+      "id": "강원",
+      "name": "강원",
+      "center": [
+        37.76,
+        128.9
+      ],
+      "members": [
+        "강원"
+      ],
+      "postal2020": 3167578,
+      "postalSourceId": "postal2020",
+      "postalOffice": "강원지방우정청"
+    },
+    {
+      "id": "충청",
+      "name": "충청",
+      "center": [
+        36.32,
+        127.43
+      ],
+      "members": [
+        "충북",
+        "충남",
+        "대전",
+        "세종"
+      ],
+      "postal2020": 18157736,
+      "postalSourceId": "postal2020",
+      "postalOffice": "충청지방우정청"
+    },
+    {
+      "id": "전북",
+      "name": "전북",
+      "center": [
+        35.81,
+        127.1
+      ],
+      "members": [
+        "전북"
+      ],
+      "postal2020": 3390945,
+      "postalSourceId": "postal2020",
+      "postalOffice": "전북지방우정청"
+    },
+    {
+      "id": "광주전남",
+      "name": "광주전남",
+      "center": [
+        35.15,
+        126.91
+      ],
+      "members": [
+        "광주",
+        "전남"
+      ],
+      "postal2020": 9140829,
+      "postalSourceId": "postal2020",
+      "postalOffice": "전남지방우정청"
+    },
+    {
+      "id": "대구경북",
+      "name": "대구경북",
+      "center": [
+        35.87,
+        128.59
+      ],
+      "members": [
+        "대구",
+        "경북"
+      ],
+      "postal2020": 14737749,
+      "postalSourceId": "postal2020",
+      "postalOffice": "경북지방우정청"
+    },
+    {
+      "id": "부울경",
+      "name": "부울경",
+      "center": [
+        35.1,
+        129.03
+      ],
+      "members": [
+        "부산",
+        "울산",
+        "경남"
+      ],
+      "postal2020": 24968384,
+      "postalSourceId": "postal2020",
+      "postalOffice": "부산지방우정청"
+    }
+  ],
+  "postal": {
+    "year": 2020,
+    "unit": "개",
+    "sourceId": "postal2020",
+    "includedTotal": 178446950,
+    "nationalTotal": 181675471,
+    "excludedJeju": 3228521,
+    "revisionNote": "2022년 연구 폴더에 보관된 2021-08-31 파일의 2020년 값(전국 181,675,471개). 2026년 공개본의 2020년 전국 합계는 176,748,550개로 다르며, 이 아카이브는 당시 파일값을 유지한다."
+  },
+  "od": null,
+  "roads": {
+    "year": 2021,
+    "unit": "대 (수시조사 시간=계, 기점·종점 합계)",
+    "sourceId": "highway2021",
+    "sourceRowCount": 26550,
+    "totalDirectionRows": 1062,
+    "sectionCount": 531,
+    "features": [
+      {
+        "id": "road-01",
+        "name": "수원신갈~신갈JCT",
+        "from": "수원신갈",
+        "to": "신갈JCT",
+        "coordinates": [
+          [
+            37.26,
+            127.1
+          ],
+          [
+            37.28,
+            127.1
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 69278,
+        "large": 865,
+        "totalVehicles": 197800,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-02",
+        "name": "하남JCT~상일",
+        "from": "하남JCT",
+        "to": "상일",
+        "coordinates": [
+          [
+            37.53,
+            127.19
+          ],
+          [
+            37.54,
+            127.17
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 59823,
+        "large": 2134,
+        "totalVehicles": 223519,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-03",
+        "name": "상일~강일",
+        "from": "상일",
+        "to": "강일",
+        "coordinates": [
+          [
+            37.54,
+            127.17
+          ],
+          [
+            37.57,
+            127.16
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 64333,
+        "large": 2290,
+        "totalVehicles": 239881,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-04",
+        "name": "서운JCT~중동",
+        "from": "서운JCT",
+        "to": "중동",
+        "coordinates": [
+          [
+            37.52,
+            126.75
+          ],
+          [
+            37.5,
+            126.74
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 56464,
+        "large": 2216,
+        "totalVehicles": 253490,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-05",
+        "name": "안성~안성JCT",
+        "from": "안성",
+        "to": "안성JCT",
+        "coordinates": [
+          [
+            36.99,
+            127.15
+          ],
+          [
+            37.03,
+            127.13
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 55081,
+        "large": 2639,
+        "totalVehicles": 188440,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-06",
+        "name": "송내~장수",
+        "from": "송내",
+        "to": "장수",
+        "coordinates": [
+          [
+            37.48,
+            126.74
+          ],
+          [
+            37.46,
+            126.75
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 54648,
+        "large": 2250,
+        "totalVehicles": 230823,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-07",
+        "name": "계양~서운JCT",
+        "from": "계양",
+        "to": "서운JCT",
+        "coordinates": [
+          [
+            37.54,
+            126.74
+          ],
+          [
+            37.52,
+            126.75
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 50233,
+        "large": 2337,
+        "totalVehicles": 212076,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-08",
+        "name": "남동~서창JCT",
+        "from": "남동",
+        "to": "서창JCT",
+        "coordinates": [
+          [
+            37.43,
+            126.71
+          ],
+          [
+            37.43,
+            126.73
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 52861,
+        "large": 4154,
+        "totalVehicles": 214073,
+        "directionRows": 2,
+        "route": "제2경인선"
+      },
+      {
+        "id": "road-09",
+        "name": "기흥~수원신갈",
+        "from": "기흥",
+        "to": "수원신갈",
+        "coordinates": [
+          [
+            37.22,
+            127.1
+          ],
+          [
+            37.26,
+            127.1
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 50485,
+        "large": 1164,
+        "totalVehicles": 211996,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-10",
+        "name": "중동~송내",
+        "from": "중동",
+        "to": "송내",
+        "coordinates": [
+          [
+            37.5,
+            126.74
+          ],
+          [
+            37.48,
+            126.74
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 47726,
+        "large": 2005,
+        "totalVehicles": 211004,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-11",
+        "name": "토평~남양주",
+        "from": "토평",
+        "to": "남양주",
+        "coordinates": [
+          [
+            37.58,
+            127.15
+          ],
+          [
+            37.6,
+            127.15
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 48245,
+        "large": 1426,
+        "totalVehicles": 188115,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-12",
+        "name": "판교JCT~성남",
+        "from": "판교JCT",
+        "to": "성남",
+        "coordinates": [
+          [
+            37.4,
+            127.09
+          ],
+          [
+            37.42,
+            127.12
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 49740,
+        "large": 1428,
+        "totalVehicles": 209014,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-13",
+        "name": "송파~서하남",
+        "from": "송파",
+        "to": "서하남",
+        "coordinates": [
+          [
+            37.47,
+            127.12
+          ],
+          [
+            37.51,
+            127.15
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 46118,
+        "large": 1170,
+        "totalVehicles": 202516,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-14",
+        "name": "서창JCT~월곶JCT",
+        "from": "서창JCT",
+        "to": "월곶JCT",
+        "coordinates": [
+          [
+            37.43,
+            126.73
+          ],
+          [
+            37.38,
+            126.75
+          ]
+        ],
+        "groups": [
+          "smallMedium",
+          "large"
+        ],
+        "smallMedium": 45517,
+        "large": 5474,
+        "totalVehicles": 137297,
+        "directionRows": 2,
+        "route": "영동선"
+      },
+      {
+        "id": "road-15",
+        "name": "북대구~금호JCT",
+        "from": "북대구",
+        "to": "금호JCT",
+        "coordinates": [
+          [
+            35.9,
+            128.58
+          ],
+          [
+            35.89,
+            128.52
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 45756,
+        "large": 3973,
+        "totalVehicles": 144977,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-16",
+        "name": "하남~하남JCT",
+        "from": "하남",
+        "to": "하남JCT",
+        "coordinates": [
+          [
+            37.52,
+            127.21
+          ],
+          [
+            37.53,
+            127.19
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 44851,
+        "large": 1487,
+        "totalVehicles": 149989,
+        "directionRows": 2,
+        "route": "중부선"
+      },
+      {
+        "id": "road-17",
+        "name": "동군포~부곡",
+        "from": "동군포",
+        "to": "부곡",
+        "coordinates": [
+          [
+            37.32,
+            126.93
+          ],
+          [
+            37.32,
+            126.96
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 44686,
+        "large": 4709,
+        "totalVehicles": 167272,
+        "directionRows": 2,
+        "route": "영동선"
+      },
+      {
+        "id": "road-18",
+        "name": "김포~노오지JCT",
+        "from": "김포",
+        "to": "노오지JCT",
+        "coordinates": [
+          [
+            37.59,
+            126.77
+          ],
+          [
+            37.56,
+            126.75
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 43177,
+        "large": 2367,
+        "totalVehicles": 189513,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-19",
+        "name": "도동JCT~북대구",
+        "from": "도동JCT",
+        "to": "북대구",
+        "coordinates": [
+          [
+            35.91,
+            128.66
+          ],
+          [
+            35.9,
+            128.58
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 44150,
+        "large": 3489,
+        "totalVehicles": 132091,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-20",
+        "name": "서하남~하남JCT",
+        "from": "서하남",
+        "to": "하남JCT",
+        "coordinates": [
+          [
+            37.51,
+            127.15
+          ],
+          [
+            37.53,
+            127.19
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 43705,
+        "large": 1379,
+        "totalVehicles": 174832,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-21",
+        "name": "자유로JCT~김포",
+        "from": "자유로JCT",
+        "to": "김포",
+        "coordinates": [
+          [
+            37.61,
+            126.79
+          ],
+          [
+            37.59,
+            126.77
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 44097,
+        "large": 2748,
+        "totalVehicles": 201740,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-22",
+        "name": "일산~자유로JCT",
+        "from": "일산",
+        "to": "자유로JCT",
+        "coordinates": [
+          [
+            37.63,
+            126.8
+          ],
+          [
+            37.61,
+            126.79
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 40775,
+        "large": 1481,
+        "totalVehicles": 189032,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-23",
+        "name": "노오지JCT~계양",
+        "from": "노오지JCT",
+        "to": "계양",
+        "coordinates": [
+          [
+            37.56,
+            126.75
+          ],
+          [
+            37.54,
+            126.74
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 39419,
+        "large": 2063,
+        "totalVehicles": 170514,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-24",
+        "name": "남양주~구리",
+        "from": "남양주",
+        "to": "구리",
+        "coordinates": [
+          [
+            37.6,
+            127.15
+          ],
+          [
+            37.61,
+            127.14
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 41626,
+        "large": 1036,
+        "totalVehicles": 166752,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-25",
+        "name": "구리~퇴계원",
+        "from": "구리",
+        "to": "퇴계원",
+        "coordinates": [
+          [
+            37.61,
+            127.14
+          ],
+          [
+            37.64,
+            127.13
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 39977,
+        "large": 837,
+        "totalVehicles": 161442,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-26",
+        "name": "서대구~금호JCT",
+        "from": "서대구",
+        "to": "금호JCT",
+        "coordinates": [
+          [
+            35.87,
+            128.53
+          ],
+          [
+            35.89,
+            128.52
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 41436,
+        "large": 3719,
+        "totalVehicles": 126685,
+        "directionRows": 2,
+        "route": "중부내륙선의지선"
+      },
+      {
+        "id": "road-27",
+        "name": "성남~송파",
+        "from": "성남",
+        "to": "송파",
+        "coordinates": [
+          [
+            37.42,
+            127.12
+          ],
+          [
+            37.47,
+            127.12
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 40768,
+        "large": 1084,
+        "totalVehicles": 175490,
+        "directionRows": 2,
+        "route": "수도권제1순환선"
+      },
+      {
+        "id": "road-28",
+        "name": "북수원~동수원",
+        "from": "북수원",
+        "to": "동수원",
+        "coordinates": [
+          [
+            37.31,
+            126.99
+          ],
+          [
+            37.3,
+            127.04
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 39267,
+        "large": 4207,
+        "totalVehicles": 143044,
+        "directionRows": 2,
+        "route": "영동선"
+      },
+      {
+        "id": "road-29",
+        "name": "마성~용인",
+        "from": "마성",
+        "to": "용인",
+        "coordinates": [
+          [
+            37.28,
+            127.17
+          ],
+          [
+            37.25,
+            127.2
+          ]
+        ],
+        "groups": [
+          "smallMedium"
+        ],
+        "smallMedium": 39281,
+        "large": 4145,
+        "totalVehicles": 143988,
+        "directionRows": 2,
+        "route": "영동선"
+      },
+      {
+        "id": "road-30",
+        "name": "구미~김천JCT",
+        "from": "구미",
+        "to": "김천JCT",
+        "coordinates": [
+          [
+            36.1,
+            128.36
+          ],
+          [
+            36.15,
+            128.26
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 23877,
+        "large": 6798,
+        "totalVehicles": 71994,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-31",
+        "name": "남구미~구미",
+        "from": "남구미",
+        "to": "구미",
+        "coordinates": [
+          [
+            36.06,
+            128.36
+          ],
+          [
+            36.1,
+            128.36
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 26121,
+        "large": 6721,
+        "totalVehicles": 79940,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-32",
+        "name": "영산~창녕",
+        "from": "영산",
+        "to": "창녕",
+        "coordinates": [
+          [
+            35.45,
+            128.51
+          ],
+          [
+            35.54,
+            128.47
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 20448,
+        "large": 6602,
+        "totalVehicles": 46698,
+        "directionRows": 2,
+        "route": "중부내륙선"
+      },
+      {
+        "id": "road-33",
+        "name": "청주JCT~남이JCT",
+        "from": "청주JCT",
+        "to": "남이JCT",
+        "coordinates": [
+          [
+            36.56,
+            127.43
+          ],
+          [
+            36.59,
+            127.42
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 37625,
+        "large": 6326,
+        "totalVehicles": 125450,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-34",
+        "name": "서부산~사상",
+        "from": "서부산",
+        "to": "사상",
+        "coordinates": [
+          [
+            35.15,
+            128.95
+          ],
+          [
+            35.15,
+            128.97
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 27001,
+        "large": 6609,
+        "totalVehicles": 120306,
+        "directionRows": 2,
+        "route": "남해제2지선"
+      },
+      {
+        "id": "road-35",
+        "name": "남지~영산",
+        "from": "남지",
+        "to": "영산",
+        "coordinates": [
+          [
+            35.39,
+            128.48
+          ],
+          [
+            35.45,
+            128.51
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 19974,
+        "large": 6023,
+        "totalVehicles": 46601,
+        "directionRows": 2,
+        "route": "중부내륙선"
+      },
+      {
+        "id": "road-36",
+        "name": "왜관~남구미",
+        "from": "왜관",
+        "to": "남구미",
+        "coordinates": [
+          [
+            35.97,
+            128.43
+          ],
+          [
+            36.06,
+            128.36
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 27653,
+        "large": 5741,
+        "totalVehicles": 87956,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-37",
+        "name": "창원JCT~동창원",
+        "from": "창원JCT",
+        "to": "동창원",
+        "coordinates": [
+          [
+            35.27,
+            128.64
+          ],
+          [
+            35.27,
+            128.69
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 28646,
+        "large": 5776,
+        "totalVehicles": 112102,
+        "directionRows": 2,
+        "route": "남해선"
+      },
+      {
+        "id": "road-38",
+        "name": "칠원JCT~칠서",
+        "from": "칠원JCT",
+        "to": "칠서",
+        "coordinates": [
+          [
+            35.28,
+            128.51
+          ],
+          [
+            35.32,
+            128.5
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 25781,
+        "large": 5662,
+        "totalVehicles": 60645,
+        "directionRows": 2,
+        "route": "중부내륙선"
+      },
+      {
+        "id": "road-39",
+        "name": "남청주~청주JCT",
+        "from": "남청주",
+        "to": "청주JCT",
+        "coordinates": [
+          [
+            36.53,
+            127.42
+          ],
+          [
+            36.56,
+            127.43
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 31589,
+        "large": 5255,
+        "totalVehicles": 107512,
+        "directionRows": 2,
+        "route": "경부선"
+      },
+      {
+        "id": "road-40",
+        "name": "회덕JCT~신탄진",
+        "from": "회덕JCT",
+        "to": "신탄진",
+        "coordinates": [
+          [
+            36.4,
+            127.41
+          ],
+          [
+            36.44,
+            127.41
+          ]
+        ],
+        "groups": [
+          "large"
+        ],
+        "smallMedium": 29375,
+        "large": 5067,
+        "totalVehicles": 102900,
+        "directionRows": 2,
+        "route": "경부선"
+      }
+    ],
+    "groupCounts": {
+      "smallMedium": 29,
+      "large": 12,
+      "unique": 40
+    },
+    "selectionNote": "2022년 노트북에서 수동 선택한 고정 구간 집합. 전체 531개 구간의 양방향 합계 순위로 자동 선정한 상위 N개가 아니다.",
+    "aggregationNote": "시간=계인 기점·종점 두 행의 차종별 대수를 합산. 3~7종=당시 연구의 중소형화물, 8~12종=대형화물. 차종의 공식 분류 명칭을 재정의하지 않는다. 연간 총대수 또는 연평균 일교통량으로 해석하지 않는다.",
+    "geometryNote": "2022년 노트북에 입력한 대략적 양 끝점 좌표를 직선으로 연결. 실제 도로 경로·지하터널 노선이 아니다."
+  },
+  "limitations": [
+    "화물 OD 원자료의 공개 이용조건 확인 전까지 해당 수치는 공개본에서 제외했다.",
+    "CJ택배 자료와 시각화, 창고 원자료, 개인정보, 타학생 자료는 공개 산출물에서 제외했다.",
+    "2020년 화물 수송량·우체국 배달물량과 2021년 도로 교통량은 서로 다른 지표로 직접 합산할 수 없다.",
+    "지역의 대표 좌표와 도로 양 끝점은 2022년 노트북에 입력한 근사 좌표다.",
+    "도로 구간은 2022년 당시 수동 선택 결과이며 전국 최상위 구간 순위가 아니다.",
+    "이 자료는 지하화 전환 수요, 공사비, 지질·지하공간, 경제성 또는 최적 노선을 검증하지 않는다."
+  ],
+  "provenance": {
+    "geometry": "2022년 기말과제 노트북의 좌표 및 선 선택을 AST로 추출. 원본 코드는 실행하지 않음.",
+    "notebookSha256": "fb7058b0fbabc70d5e634eab6ebfc8776ed21e1b70809d95fb1ff989b3719d90",
+    "odValidationCells": null
+  }
+}
