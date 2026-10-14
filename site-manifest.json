@@ -1,6 +1,6 @@
 {
   "project": "logistics-flow",
-  "built_at_utc": "2026-10-14T15:01:19.407Z",
+  "built_at_utc": "2026-10-14T15:09:37.700Z",
   "files": [
     {
       "path": ".gitignore",
@@ -29,8 +29,8 @@
     },
     {
       "path": "app.js",
-      "bytes": 31134,
-      "sha256": "22c5acb0b2968bbcf8dcbc74e53d5649fdb8735edf374693220d1e50ac698552"
+      "bytes": 31176,
+      "sha256": "66855125e16626d1e0f973936259b733e14c8f38778b8fa139af4bec64a0e5cb"
     },
     {
       "path": "archive/PUBLIC_COPY_NOTES.txt",
@@ -109,8 +109,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 21802,
-      "sha256": "7ec97f1d5bce5706fab12ab0bf9b30a45257c898bad082e590908e3d44f5ff76"
+      "bytes": 21823,
+      "sha256": "d55d09fb317617eabdd00745e1861f3c8be9eb2528e83bd5df2e1a84349a1a81"
     },
     {
       "path": "requirements.txt",
