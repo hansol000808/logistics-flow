@@ -27,3 +27,17 @@
 !/vendor/leaflet/images/marker-icon.png
 !/vendor/leaflet/images/marker-icon-2x.png
 !/vendor/leaflet/images/marker-shadow.png
+!/data/od_2020_matrix.csv
+!/data/cj_districts.csv
+!/data/roads_2021_sections.csv
+!/data/roads_2021_directions.csv
+!/data/facilities_2022.csv
+!/data/postal_2020_regions.csv
+!/archive/
+!/archive/catalog.json
+!/archive/research-notebook.ipynb
+!/archive/original-map-1.html
+!/archive/original-map-2.html
+!/archive/original-map-3-1.html
+!/archive/original-map-3-2.html
+!/archive/PUBLIC_COPY_NOTES.txt

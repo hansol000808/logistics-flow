@@ -21,3 +21,9 @@
 ## 연구 자료
 
 지도 라이브러리 라이선스와 연구 데이터의 사용조건은 별개입니다. 자료별 출처·기준시점·가공 방법은 [DATA_SOURCES.md](DATA_SOURCES.md)에 명시합니다. 제3자 데이터나 원문 도판 전체에 별도의 포괄적인 오픈소스 라이선스를 부여하지 않습니다.
+
+## 서울 자치구 경계와 연구 사본
+
+서울 경계는 원본 연구에서 사용한 [southkorea/seoul-maps KOSTAT 2013 자료](https://github.com/southkorea/seoul-maps/tree/master/kostat/2013)를 당시 HTML에서 추출했습니다. 기준연도와 데이터 출처는 사이트와 DATA_SOURCES.md에 표시합니다. 원본 지도 사본 네 개도 저장소의 Leaflet을 사용하고 기존 외부 CDN 의존성을 제거했습니다.
+
+분석 코드와 지도 사본의 처리 범위는 자료실 각 항목에서 확인할 수 있습니다.

@@ -1,0 +1,48 @@
+{
+  "title": "원본 연구 자료실",
+  "updatedAt": "2026-10-14",
+  "items": [
+    {
+      "title": "원본 분석 노트북 공개 사본",
+      "description": "2022년 코드 기록. 실행 출력·개인 경로를 정리했습니다. 당시 라이브러리 API가 포함되어 있으며 현행 재구성 코드는 GitHub의 scripts/build_data.py입니다.",
+      "url": "archive/research-notebook.ipynb",
+      "kind": "NOTEBOOK",
+      "sizeBytes": 19130
+    },
+    {
+      "title": "원본 지도 1 · 서울 CJ 차량 활동",
+      "description": "당시 25개 구 단계구분도. 구별 기준월이 다르며 차량 경유지 건수를 표현합니다.",
+      "url": "archive/original-map-1.html",
+      "kind": "HTML",
+      "sizeBytes": 67300
+    },
+    {
+      "title": "원본 지도 2 · 권역 간 이동과 배달량",
+      "description": "OD 28개 연결선과 우체국 8개 원을 함께 표시한 당시 표현입니다. 원 반지름 비례 방식을 보존했습니다.",
+      "url": "archive/original-map-2.html",
+      "kind": "HTML",
+      "sizeBytes": 21095
+    },
+    {
+      "title": "원본 지도 3 · 도로와 물류시설",
+      "description": "중소형·대형 선을 함께 표시하고 물류시설 20곳을 겹친 당시 지도입니다.",
+      "url": "archive/original-map-3-1.html",
+      "kind": "HTML",
+      "sizeBytes": 34192
+    },
+    {
+      "title": "원본 지도 4 · 도로와 항만",
+      "description": "중소형·대형 선과 부산항·인천항을 함께 표시한 당시 지도입니다.",
+      "url": "archive/original-map-3-2.html",
+      "kind": "HTML",
+      "sizeBytes": 24909
+    },
+    {
+      "title": "공개 사본 정리 기록",
+      "description": "남아 있는 연구 사본의 변경 범위와 분석 코드·지도 파일의 처리 기록입니다.",
+      "url": "archive/PUBLIC_COPY_NOTES.txt",
+      "kind": "TEXT",
+      "sizeBytes": 2349
+    }
+  ]
+}

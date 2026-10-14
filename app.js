@@ -1,256 +1,93 @@
-/* Historical research explorer. The data file is the only content source. */
+/* 2022 research archive. The versioned JSON is the content source. */
 (() => {
   'use strict';
-
-  const $ = (selector) => document.querySelector(selector);
-  const $$ = (selector) => [...document.querySelectorAll(selector)];
-  const number = (value) => Number(value).toLocaleString('ko-KR');
-  const escape = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const modeInfo = {
-    smallMedium: {name:'중소형 화물차', color:'#bd5526', year:2021, unit:'대', value:'smallMedium'},
-    large: {name:'대형 화물차', color:'#276d66', year:2021, unit:'대', value:'large'},
-    postal: {name:'권역별 우체국 배달량', color:'#276d66', year:2020, unit:'개', value:'postal2020'},
-  };
-  const state = {data:null, mode:'smallMedium', selected:null, query:'', map:null, layer:null, drawn:[], regions:new Map(), view:'national'};
-
-  function showMapStatus(message) {
-    $('#map-status').textContent = message;
-    $('#map-status').hidden = false;
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const number=v=>Number.isFinite(Number(v))?Number(v).toLocaleString('ko-KR'):'—';
+  const escape=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const normalize=v=>String(v||'').toLocaleLowerCase('ko-KR').replace(/\s+/g,'');
+  const info={smallMedium:{name:'중소형 화물차',color:'#bd5526',value:'smallMedium',unit:'대'},large:{name:'대형 화물차',color:'#276d66',value:'large',unit:'대'},compare:{name:'화물차 합계',color:'#745381',value:'freight',unit:'대'},postal:{name:'우체국 배달량',color:'#276d66',value:'postal2020',unit:'개'},od:{name:'양방향 화물 수송량',color:'#276d66',value:'total',unit:'톤/년'},cj:{name:'경유지 집계 (VIA_CNT)',color:'#bd5526',value:'value',unit:'건'}};
+  const state={data:null,mode:'smallMedium',selected:null,query:'',cjPeriod:'all',map:null,layer:null,hubs:null,regions:new Map(),cjFeatures:new Map(),roadSelection:null};
+  function showMapStatus(message){$('#map-status').textContent=message;$('#map-status').hidden=false;}
+  function safeUrl(value){if(typeof value!=='string'||!value.trim())return null;try{const url=new URL(value,window.location.href);return ['https:','http:'].includes(url.protocol)?url.href:null;}catch{return null;}}
+  function initMap(){
+    if(!window.L){showMapStatus('지도 구성 요소를 불러오지 못했습니다. 아래 목록과 표에서 자료를 확인할 수 있습니다.');$$('.map-view-controls button').forEach(b=>b.disabled=true);return;}
+    state.map=L.map('map',{scrollWheelZoom:false,minZoom:5,maxZoom:16,attributionControl:true});state.map.setView([36.25,127.75],7);
+    const tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'});let failures=0,loaded=0;
+    tiles.on('tileerror',()=>{failures++;if(failures>=3)showMapStatus('배경지도를 불러오지 못한 부분이 있습니다. 분석 표시와 아래 목록·표는 계속 이용할 수 있습니다.');});
+    tiles.on('tileload',()=>{loaded++;if(loaded>failures*3){$('#map-status').hidden=true;failures=0;}});tiles.addTo(state.map);state.layer=L.layerGroup().addTo(state.map);state.hubs=L.layerGroup().addTo(state.map);
+    // Only visible map tiles are requested; no prefetch or offline download.
   }
-
-  function initMap() {
-    if (!window.L) {
-      showMapStatus('지도 구성 요소를 불러오지 못했습니다. 아래 목록에서 구간과 교통량을 확인할 수 있습니다.');
-      $$('.map-view-controls button').forEach((button) => { button.disabled = true; });
-      return;
-    }
-    state.map = L.map('map', {scrollWheelZoom:false, zoomControl:true, minZoom:5, maxZoom:16, preferCanvas:false, attributionControl:true});
-    state.map.setView([36.25,127.75],7);
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom:19,
-      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
-    });
-    let tileErrors = 0;
-    let tilesLoaded = 0;
-    tiles.on('tileerror', () => {
-      tileErrors += 1;
-      if (tileErrors >= 3) showMapStatus('배경지도를 불러오지 못한 부분이 있습니다. 구간 표시와 아래 목록은 계속 이용할 수 있습니다.');
-    });
-    tiles.on('tileload', () => {
-      tilesLoaded += 1;
-      if (tilesLoaded > tileErrors * 3) {
-        $('#map-status').hidden = true;
-        tileErrors = 0;
-      }
-    });
-    tiles.addTo(state.map);
-    state.layer = L.layerGroup().addTo(state.map);
-    // No tile prefetching: only the current visible map is requested.
+  function setView(view){$$('.map-view-controls button').forEach(b=>{const active=b.dataset.view===view;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});if(!state.map)return;
+    const bounds=view==='seoul'?[[37.40,126.75],[37.72,127.20]]:view==='capital'?[[36.95,126.48],[37.87,127.65]]:[[34.65,125.85],[38.35,129.75]];state.map.fitBounds(bounds,{padding:[20,20],animate:false});}
+  function itemsForMode(){
+    if(state.mode==='postal')return(state.data.regions||[]).filter(r=>Number.isFinite(r.postal2020)).sort((a,b)=>b.postal2020-a.postal2020);
+    if(state.mode==='od')return(state.data.od?.pairs||[]).map(p=>({...p,id:`od-${p.from}-${p.to}`,name:`${p.from} ↔ ${p.to}`,coordinates:[state.regions.get(p.from)?.center,state.regions.get(p.to)?.center]})).sort((a,b)=>b.total-a.total);
+    if(state.mode==='cj')return(state.data.cj?.districts||[]).filter(d=>state.cjPeriod==='all'||d.period===state.cjPeriod).sort((a,b)=>a.name.localeCompare(b.name,'ko'));
+    return(state.data.roads?.features||[]).filter(r=>state.mode==='compare'||r.groups?.includes(state.mode)).map(r=>({...r,freight:r.smallMedium+r.large})).sort((a,b)=>b[info[state.mode].value]-a[info[state.mode].value]);
   }
-
-  function itemsForMode() {
-    if (state.mode === 'postal') {
-      return (state.data.regions || []).filter((region) => Number.isFinite(region.postal2020)).sort((a,b) => b.postal2020 - a.postal2020);
-    }
-    return (state.data.roads?.features || []).filter((feature) => feature.groups?.includes(state.mode)).sort((a,b) => b[state.mode] - a[state.mode]);
+  function visibleItems(){return itemsForMode().filter(r=>normalize(`${r.name}${r.from||''}${r.to||''}${r.route||''}${(r.members||[]).join('')}`).includes(normalize(state.query)));}
+  function roadGroups(item){return(item.groups||[]).map(g=>g==='smallMedium'?'중소형':'대형').join(' · ')||'미선정';}
+  function rowContext(item){return state.mode==='cj'?`${item.period} · 기준월`:state.mode==='od'?'2020 · 양방향 합계':state.mode==='postal'?'2020 · 배달실적':state.mode==='compare'?roadGroups(item):'2021 · 수시조사 합계';}
+  function drawHubs(){if(!state.map)return;state.hubs.clearLayers();(state.data.facilities||[]).forEach(hub=>{if(!(hub.type==='port'?$('#show-ports').checked:$('#show-logistics').checked))return;
+    const icon=L.divIcon({className:'facility-icon',html:`<span class="facility-pin ${hub.type==='port'?'port-pin':''}">${hub.type==='port'?'⚓':'◇'}</span>`,iconSize:[20,20],iconAnchor:[10,10]});
+    const marker=L.marker(hub.coordinates,{icon,title:`${hub.name} (${hub.type==='port'?'항만':'물류시설'})`,keyboard:true}).addTo(state.hubs);marker.bindTooltip(`${escape(hub.name)} · ${hub.type==='port'?'항만':'물류시설'}`);marker.on('click',()=>selectHub(hub,false));});}
+  function cjColor(value){const values=(state.data.cj?.districts||[]).map(d=>d.value),min=Math.min(...values),max=Math.max(...values),t=max===min?.5:(value-min)/(max-min);return['#f6e9cc','#e9c88c','#d79b5a','#be6f36','#8e3d23'][Math.min(4,Math.floor(t*5))];}
+  function addRegionLabel(region,onClick){const icon=L.divIcon({className:'region-icon',html:`<span class="region-label">${escape(region.name)}</span>`,iconSize:[0,0],iconAnchor:[0,0]});L.marker(region.center,{icon,title:`${region.name} 권역 상세`,keyboard:true}).addTo(state.layer).on('click',onClick);}
+  function refreshMap(){if(!state.map)return;state.layer.clearLayers();const items=visibleItems(),config=info[state.mode],max=Math.max(1,...itemsForMode().map(r=>r[config.value]||0));
+    if(state.mode==='cj'){items.forEach(d=>{const feature=state.cjFeatures.get(d.id);if(!feature)return;const selected=state.selected?.id===d.id,polygon=L.geoJSON(feature,{style:{color:selected?'#163f3c':'#fff9e9',weight:selected?3:1,fillColor:cjColor(d.value),fillOpacity:.78}}).addTo(state.layer);polygon.bindTooltip(`${escape(d.name)} · ${escape(d.period)}<br>경유지 집계 ${number(d.value)}건 (VIA_CNT)`);polygon.on('click',()=>selectItem(d,false));});}
+    else if(state.mode==='postal'){items.forEach(r=>{const selected=state.selected?.id===r.id,circle=L.circleMarker(r.center,{radius:38*Math.sqrt(r.postal2020/max),color:selected?'#a74822':config.color,weight:selected?2.5:1.5,fillColor:selected?'#bd5526':config.color,fillOpacity:.28}).addTo(state.layer);circle.bindTooltip(`${escape(r.name)} · ${number(r.postal2020)}개`);circle.on('click',()=>selectItem(r,false));});items.forEach(r=>addRegionLabel(r,()=>selectItem(r,false)));}
+    else{let selectedLine=null;[...items].reverse().forEach(item=>{if(!item.coordinates?.every(p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite)))return;const selected=state.selected?.id===item.id,color=state.mode==='compare'?(item.groups.length>1?'#745381':item.groups.includes('large')?'#276d66':'#bd5526'):config.color,width=state.mode==='od'?1.2+7*Math.sqrt(item.total/max):3.5;
+      const line=L.polyline(item.coordinates,{color:state.mode==='od'&&selected?'#bd5526':color,weight:state.mode==='od'?width:selected?width+2:width,opacity:selected?1:state.mode==='od'?.5:.82,lineCap:'round',dashArray:state.mode==='compare'&&item.groups.length>1?'7 3':null}).addTo(state.layer);
+      line.bindTooltip(`${escape(item.name)} · ${number(item[config.value])} ${config.unit}${state.mode==='od'?`<br>${escape(item.from)} → ${escape(item.to)}: ${number(item.forward)}<br>${escape(item.to)} → ${escape(item.from)}: ${number(item.reverse)}`:''}`,{sticky:true});line.on('click',()=>selectItem(item,false));if(selected)selectedLine=line;
+      if(state.mode!=='od')item.coordinates.forEach(p=>L.circleMarker(p,{radius:selected?3:2,color,weight:1,fillColor:'#fffef9',fillOpacity:1}).addTo(state.layer).on('click',()=>selectItem(item,false)));});if(selectedLine)selectedLine.bringToFront();if(state.mode==='od')state.regions.forEach(r=>addRegionLabel(r,()=>selectODRegion(r)));}
+    drawHubs();
   }
-
-  function visibleItems() {
-    const query = state.query.trim().toLocaleLowerCase('ko-KR').replace(/\s+/g,'');
-    return itemsForMode().filter((item) => `${item.name}${item.from || ''}${item.to || ''}${item.route || ''}${(item.members || []).join('')}`.toLocaleLowerCase('ko-KR').replace(/\s+/g,'').includes(query));
+  function renderList(){const all=itemsForMode(),items=visibleItems(),config=info[state.mode];$('#list-count').textContent=`${items.length} / ${all.length}개`;$('#section-list').innerHTML=items.length?items.map((item,index)=>`<tr class="${state.selected?.id===item.id?'selected-row':''}"><td><button type="button" data-item-id="${escape(item.id)}" aria-pressed="${state.selected?.id===item.id}"><span class="row-number" aria-hidden="true">${String(index+1).padStart(2,'0')}</span>${escape(item.name)}<span class="row-arrow" aria-hidden="true">↗</span><span class="sr-only"> 상세 보기</span></button>${state.mode==='cj'?`<span class="mobile-period">${escape(item.period)}</span>`:''}</td><td>${number(item[config.value])} <span>${config.unit}</span></td><td>${escape(rowContext(item))}</td></tr>`).join(''):'<tr><td colspan="3" class="table-empty">일치하는 항목이 없습니다. 검색어나 기준월을 바꿔 보세요.</td></tr>';}
+  function valueBlock(label,value,unit){return`<div class="detail-value"><span class="small-label">${escape(label)}</span><strong>${number(value)}</strong><span class="value-unit">${escape(unit)}</span></div>`;}
+  function detailMarkup(item){const config=info[state.mode];
+    if(state.mode==='cj')return`<h3 id="detail-title">${escape(item.name)}</h3><p class="detail-route">자료 기준월 <strong>${escape(item.period)}</strong></p>${valueBlock('경유지 집계 (VIA_CNT)',item.value,'건')}<p class="detail-note">배송건수·고유 배송지 수가 아닙니다.<br>구마다 기준월이 달라 같은 시점의 순위로 비교할 수 없습니다.</p>`;
+    if(state.mode==='postal'){const share=state.data.postal?.includedTotal?(100*item.postal2020/state.data.postal.includedTotal).toFixed(1):null;return`<h3 id="detail-title">${escape(item.name)} 권역</h3><p class="detail-route">${escape((item.members||[]).join(' · '))}<br>${escape(item.postalOffice||'')} 기준</p>${valueBlock('2020년 우체국 배달물량',item.postal2020,'개')}${share?`<p class="detail-route">공개된 8개 권역 합계의 ${share}%</p>`:''}<p class="detail-note">2022년 보관본의 값 · 제주 제외<br>현재 공개본과 값이 다를 수 있습니다.<br>권역 간 이동량을 뜻하지 않습니다.</p>`;}
+    if(state.mode==='od')return`<h3 id="detail-title">${escape(item.from)}<span class="detail-direction">↔</span>${escape(item.to)}</h3><p class="detail-route">2020년 · 서로 다른 권역 간 수송</p>${valueBlock('양방향 화물 수송량',item.total,'톤/년')}<dl class="direction-values"><div><dt>${escape(item.from)} → ${escape(item.to)}</dt><dd>${number(item.forward)} 톤/년</dd></div><div><dt>${escape(item.to)} → ${escape(item.from)}</dt><dd>${number(item.reverse)} 톤/년</dd></div></dl><p class="detail-note">선은 권역 대표 위치를 연결합니다.<br>실제 운행 경로나 차량 대수가 아닙니다.</p>`;
+    return`<h3 id="detail-title">${escape(item.from)}<span class="detail-direction">↔</span>${escape(item.to)}</h3><p class="detail-route">${escape(item.route||'')} · 2022년 연구 선정</p>${valueBlock(`${config.name} · 양방향 합계`,item[config.value],'대')}${state.mode==='compare'?`<dl class="direction-values"><div><dt>중소형 화물차</dt><dd>${number(item.smallMedium)}대</dd></div><div><dt>대형 화물차</dt><dd>${number(item.large)}대</dd></div></dl><p class="detail-note">선정 집합: ${escape(roadGroups(item))}</p>`:''}<p class="detail-note">2021년 수시교통량 · 시간 항목 ‘계’<br>일평균 또는 연간 총량을 뜻하지 않습니다.</p>`;
   }
-
-  function safeUrl(value) {
-    try { const url = new URL(value); return ['https:','http:'].includes(url.protocol) ? url.href : null; } catch { return null; }
+  function selectItem(item,zoom){state.selected=item;$('#detail-kicker').textContent=({postal:'REGIONAL DELIVERIES',cj:'SEOUL / MIXED PERIODS',od:'REGIONAL CONNECTION',compare:'TWO VEHICLE GROUPS'})[state.mode]||'SELECTED SECTION';$('#selection-detail').innerHTML=detailMarkup(item);$$('#section-list button[data-item-id]').forEach(b=>{const active=b.dataset.itemId===item.id;b.setAttribute('aria-pressed',String(active));b.closest('tr').classList.toggle('selected-row',active);});refreshMap();if(!zoom||!state.map)return;
+    if(state.mode==='cj'){const feature=state.cjFeatures.get(item.id);if(feature)state.map.fitBounds(L.geoJSON(feature).getBounds(),{padding:[30,30],maxZoom:12,animate:false});}else if(item.center)state.map.setView(item.center,8,{animate:false});else if(item.coordinates?.every(Boolean))state.map.fitBounds(item.coordinates,{padding:[50,50],maxZoom:state.mode==='od'?8:11,animate:false});$$('.map-view-controls button').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});}
+  function selectODRegion(region){const matrix=state.data.od.matrix,index=state.data.od.regionOrder.indexOf(region.id);if(index<0)return;const outgoing=matrix[index].reduce((sum,v,i)=>sum+(i===index?0:v),0),incoming=matrix.reduce((sum,row,i)=>sum+(i===index?0:row[index]),0);state.selected=null;$('#detail-kicker').textContent='OD / REGIONAL PROFILE';$('#selection-detail').innerHTML=`<h3 id="detail-title">${escape(region.name)} 권역</h3><p class="detail-route">2020년 · 톤/년</p><dl class="direction-values"><div><dt>다른 7권역으로 반출</dt><dd>${number(outgoing)}</dd></div><div><dt>다른 7권역에서 반입</dt><dd>${number(incoming)}</dd></div><div><dt>권역 내부 이동</dt><dd>${number(matrix[index][index])}</dd></div></dl><p class="detail-note">내부 이동은 지도 연결선에서 제외하며 방향별 표의 대각선에서 확인할 수 있습니다.</p>`;renderList();refreshMap();}
+  function updateMode(){const mode=state.mode,config=info[mode],items=itemsForMode(),postal=mode==='postal',cj=mode==='cj',od=mode==='od',compare=mode==='compare';
+    $('#data-stamp').textContent=cj?'구별 혼합 기준월':od?'2020년 화물 OD':postal?'2020년 우체국 배달량':'2021년 도로 교통량';$('#legend-label').textContent=cj?'낮음 ░▒▓ 높음 · 혼합 기간 집계':od?'굵을수록 양방향 수송량이 큽니다':postal?'원 면적 ∝ 배달량 · 대표 위치':compare?'주황 중소형 · 청록 대형 · 보라 중복':'2022년 연구 선정 구간';$('.legend-line').style.background=cj?'linear-gradient(90deg,#f6e9cc,#8e3d23)':config.color;$('.legend-line').classList.toggle('legend-circle',postal);
+    $('.map-note').textContent=cj?'구별 기준월이 다릅니다. 동일 시점의 배송량 순위로 해석하지 않습니다.':od?'선은 대표 위치를 연결하며 실제 운행 경로와 다릅니다.':postal?'원은 권역 배달량을 나타내며 실제 서비스 영역과 다릅니다.':'선은 두 지점의 연결을 나타내며 실제 도로 선형과 다릅니다.';
+    $('#summary-label').textContent=cj?'선택 기준월의 서울 자치구':od?'서로 다른 권역 간 연결':postal?'우정청 기준 연구 권역':'연구 선정 구간';$('#summary-count').textContent=number(items.length);$('#summary-unit').textContent=cj?'개 자치구':od?'쌍 · 8개 권역':postal?'개 권역 · 제주 제외':'개 구간';
+    $('#mode-description').textContent=cj?'VIA_CNT 경유지 집계입니다. 25개 구의 자료가 15개월에 걸쳐 있어 값의 차이에 시점 차이가 섞여 있습니다.':od?'서로 다른 두 권역의 양방향 수송량을 더했습니다. 권역 내부 이동은 아래 8 × 8 표에서 확인합니다.':postal?'2022년에 사용한 2020년 배달실적입니다. 원 면적이 배달량에 비례하며 권역 간 이동을 뜻하지 않습니다.':compare?'중소형 29개·대형 12개 선정 집합 중 1개가 겹쳐 고유 구간은 40개입니다.':'2022년 연구에서 수동으로 선택한 고정 구간입니다. 전국 자동 최적화나 전체 구간 순위가 아닙니다.';
+    $('#list-title').textContent=cj?'자치구별 경유지 집계':od?'권역 간 연결 목록':postal?'권역별 배달량 목록':'선정 구간 목록';$('#section-list').closest('table').querySelector('thead th:first-child').textContent=cj?'자치구':postal?'권역':'구간 / 연결';$('#table-value-heading').textContent=config.name;$('#table-caption').textContent=`${$('#list-title').textContent}. 이름을 누르면 지도와 상세 정보를 확인할 수 있습니다.`;
+    $('#list-footnote').textContent=cj?'자치구 이름순입니다. 각 구의 기준월을 반드시 확인하세요. VIA_CNT는 경유지 집계이며 배송건수나 고유 배송지 수가 아닙니다.':od?'2020년 · 톤/년 · 양방향 합계가 많은 순서입니다. 제주는 제외했으며 권역 내부 이동은 연결선에 포함하지 않습니다.':postal?'2022년 보관본의 2020년 우체국 배달량입니다. 제주를 제외한 8개 권역이며 현재 공개본과 차이가 있어 당시 값을 유지했습니다.':'선정 집합 안에서 교통량이 많은 순서입니다. 2021년 수시조사 양방향 합계이며 전국 전체 구간의 순위가 아닙니다.';
+    $('#cj-period-label').hidden=!cj;$('#od-matrix-panel').hidden=!od;$('#analysis-context').hidden=!cj;$('#analysis-context').textContent=cj?`기준월 주의 · ${state.data.cj?.yearNote||'구별 혼합 기간'}. ${state.data.cj?.comparisonNote||'동일 시점의 자치구 순위로 비교할 수 없습니다.'}`:'';
+    state.selected=visibleItems()[0]||null;renderList();if(state.selected)selectItem(state.selected,false);else{$('#selection-detail').innerHTML='<h3 id="detail-title">일치하는 항목이 없습니다.</h3><p class="detail-note">검색어나 기준월을 바꿔 주세요.</p>';refreshMap();}
   }
-
-  function renderSources() {
-    const descriptions = {
-      highway2021:'선정 구간별 중소형·대형 화물차 교통량을 기점·종점 양방향으로 합산했습니다. 수시조사의 합계이며, 연간 총량이나 일평균으로 해석하지 않습니다.',
-      freightOD2020:'원자료의 공개 조건을 추가 확인해야 하므로 이 공개본에서는 수치를 제외했습니다. 당시 연구에서 사용한 자료의 출처만 기록합니다.',
-      postal2020:'우체국 총괄국별 배달물량을 우정청 기준 8개 권역으로 묶었습니다. 제주를 제외했으며, 이 수치는 권역 간 이동량이 아닌 권역 내 배달실적입니다.',
-    };
-    $('#source-list').innerHTML = (state.data.sources || []).map((source,index) => {
-      const url = safeUrl(source.url);
-      const revision = source.id === 'postal2020' && state.data.postal?.revisionNote ? `<p>${escape(state.data.postal.revisionNote)}</p>` : '';
-      const license = source.license || source.reuseNotice || source.licenseNote || '';
-      return `<article class="source-row"><span class="source-number">${String(index+1).padStart(2,'0')}</span><div><h3>${escape(source.title)}${source.derivedDataPublished === false ? ' · 수치 공개 제외' : ''}</h3><p>${escape(descriptions[source.id] || source.description || '')}</p>${revision}${typeof license === 'string' && license ? `<p>${escape(license)}</p>` : ''}</div><div class="source-meta"><strong>${escape(source.period)}년 자료</strong><span>${escape(source.unit)}</span></div>${url ? `<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">원출처 <span aria-hidden="true">↗</span><span class="sr-only">: ${escape(source.title)} (새 창)</span></a>` : ''}</article>`;
-    }).join('');
+  function setMode(mode){state.mode=mode;state.query='';state.cjPeriod='all';$('#section-search').value='';$('#cj-period').value='all';$$('.mode-button').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});updateMode();setView(mode==='cj'?'seoul':'national');}
+  function renderHubs(){const hubs=state.data.facilities||[];$('#logistics-count').textContent=hubs.filter(h=>h.type==='logistics').length;$('#port-count').textContent=hubs.filter(h=>h.type==='port').length;$('#hub-list-count').textContent=`${hubs.length}개 거점`;$('#hub-buttons').innerHTML=hubs.map(h=>`<button type="button" data-hub-id="${escape(h.id)}" aria-pressed="false"><span class="hub-key ${h.type==='port'?'port-key':'logistics-key'}" aria-hidden="true"></span>${escape(h.name)}<span>${h.type==='port'?'항만':'물류시설'}</span></button>`).join('');}
+  function selectHub(hub,zoom){const checkbox=hub.type==='port'?$('#show-ports'):$('#show-logistics');if(!checkbox.checked){checkbox.checked=true;drawHubs();}$('#hub-detail').innerHTML=`<strong>${escape(hub.name)}</strong> · ${hub.type==='port'?'항만':'물류시설'}<br>${escape(hub.note||'2022년 연구 노트북에 입력한 근사 위치입니다.')} <span>위도 ${number(hub.coordinates[0])}, 경도 ${number(hub.coordinates[1])}</span>`;$$('#hub-buttons button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.hubId===hub.id)));$('#hub-list').open=true;if(zoom&&state.map)state.map.setView(hub.coordinates,11,{animate:false});}
+  function renderMatrix(){const od=state.data.od;if(!od?.matrix)return;const names=od.regionOrder;$('#od-matrix').innerHTML=`<caption class="sr-only">2020년 화물 OD, 톤/년. 행은 출발 권역, 열은 도착 권역입니다.</caption><thead><tr><th scope="col">출발 ↓ / 도착 →</th>${names.map(n=>`<th scope="col">${escape(n)}</th>`).join('')}</tr></thead><tbody>${od.matrix.map((row,i)=>`<tr><th scope="row">${escape(names[i])}</th>${row.map((v,j)=>`<td class="${i===j?'matrix-diagonal':''}" title="${escape(names[i])} → ${escape(names[j])}${i===j?' (권역 내부)':''}">${number(v)}</td>`).join('')}</tr>`).join('')}</tbody>`;}
+  const metricNames={smallMedium:'중소형 화물차',large:'대형 화물차',freight:'화물차 합계',totalVehicles:'전체 차량'};
+  function roadValue(row,metric){return metric==='freight'?row.smallMedium+row.large:row[metric];}
+  function renderRoads(){const all=state.data.roads?.allSections||[],query=normalize($('#road-search').value),metric=$('#road-metric').value,sort=$('#road-sort').value,selection=$('#road-selection').value;const rows=all.filter(r=>normalize(`${r.name}${r.route}`).includes(query)&&(selection==='all'||(selection==='selected'?r.groups.length>0:r.groups.length===0)));rows.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name,'ko'):sort==='route'?a.route.localeCompare(b.route,'ko')||a.name.localeCompare(b.name,'ko'):sort==='asc'?roadValue(a,metric)-roadValue(b,metric):roadValue(b,metric)-roadValue(a,metric));$('#road-result-count').textContent=`${number(rows.length)} / ${number(all.length)}개 구간`;$('#road-metric-heading').textContent=`${metricNames[metric]} (대)`;
+    $('#road-results').innerHTML=rows.length?rows.map(r=>`<tr class="${state.roadSelection===r.id?'selected-row':''}"><td><button type="button" data-road-id="${escape(r.id)}" aria-pressed="${state.roadSelection===r.id}">${escape(r.name)} <span aria-hidden="true">↗</span></button><span class="road-route">${escape(r.route)}</span></td><td>${number(roadValue(r,metric))}</td><td>${r.groups.length?`<span class="selection-tag">${escape(roadGroups(r))}</span>`:'—'}</td></tr>`).join(''):'<tr><td colspan="3" class="table-empty">일치하는 도로 구간이 없습니다. 검색어나 필터를 바꿔 보세요.</td></tr>';
   }
-
-  function setView(view) {
-    state.view = view;
-    $$('.map-view-controls button').forEach((button) => {
-      const active = button.dataset.view === view;
-      button.classList.toggle('selected', active);
-      button.setAttribute('aria-pressed', String(active));
-    });
-    if (!state.map) return;
-    if (view === 'capital') state.map.fitBounds([[36.95,126.48],[37.87,127.65]], {padding:[22,35],animate:false});
-    else state.map.fitBounds([[34.65,125.85],[38.35,129.75]], {padding:[20,20],animate:false});
+  function selectRoad(row){state.roadSelection=row.id;$$('#road-results button').forEach(b=>{const active=b.dataset.roadId===row.id;b.setAttribute('aria-pressed',String(active));b.closest('tr').classList.toggle('selected-row',active);});$('#road-direction-detail').innerHTML=`<div class="direction-heading"><div><span class="small-label">DIRECTION DETAIL</span><h3>${escape(row.name)}</h3><p>${escape(row.route)} · 2021년 수시조사 · 대</p></div>${row.selectedFeatureId&&row.coordinates?`<button type="button" class="text-button" data-map-road="${escape(row.selectedFeatureId)}">지도에서 보기 ↗</button>`:'<span class="coordinate-note">연구에 입력한 좌표 없음</span>'}</div><div class="direction-scroll"><table><caption class="sr-only">${escape(row.name)} 방향별 차량 대수</caption><thead><tr><th scope="col">방향</th><th scope="col">중소형</th><th scope="col">대형</th><th scope="col">화물 합계</th><th scope="col">전체 차량</th></tr></thead><tbody>${(row.directions||[]).map(d=>`<tr><th scope="row">${escape(d.direction)}</th><td>${number(d.smallMedium)}</td><td>${number(d.large)}</td><td>${number(d.smallMedium+d.large)}</td><td>${number(d.totalVehicles)}</td></tr>`).join('')}<tr class="direction-total"><th scope="row">양방향 합계</th><td>${number(row.smallMedium)}</td><td>${number(row.large)}</td><td>${number(row.smallMedium+row.large)}</td><td>${number(row.totalVehicles)}</td></tr></tbody></table></div>`;}
+  function renderSources(){const descriptions={highway2021:'2021년 수시조사의 전체 구간과 2022년 선정 구간입니다. 시간 항목 ‘계’의 기점·종점을 합산하며 일평균·연간 총량으로 해석하지 않습니다.',freightOD2020:'지역 간 화물 수송실적을 8개 연구 권역으로 집계했습니다. 지도는 권역 간 양방향 합계, 행렬은 방향별 값과 권역 내부 이동을 포함합니다.',postal2020:'총괄국별 배달물량을 우정청 기준 8개 권역으로 묶었습니다. 제주를 제외한 권역별 배달실적이며 권역 간 이동량이 아닙니다.',cjArchive:'서울 25개 자치구별 경유지 집계(VIA_CNT)입니다. 구별 기준월이 다른 15개월의 보관 자료로 동일 시점의 배송량 순위를 나타내지 않습니다.',archiveGeometry:'2022년 연구 노트북에 입력한 물류시설·항만과 도로 구간의 근사 좌표를 복원했습니다. 현재 시설 운영 여부나 실제 도로 선형을 보증하지 않습니다.'};
+    $('#source-list').innerHTML=(state.data.sources||[]).map((source,index)=>{const url=safeUrl(source.url),revision=source.id==='postal2020'?state.data.postal?.revisionNote:'',note=source.publicationNote||source.permissionNote||source.licenseNote||source.reuseNotice||source.license;return`<article class="source-row"><span class="source-number">${String(index+1).padStart(2,'0')}</span><div><h3>${escape(source.title)}</h3><p>${escape(descriptions[source.id]||source.description||'')}</p>${revision?`<p>${escape(revision)}</p>`:''}${typeof note==='string'&&note?`<p>${escape(note)}</p>`:''}</div><div class="source-meta"><strong>${escape(source.period||'2022년 보관 자료')}</strong><span>${escape(source.unit||'')}</span></div>${url?`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer">원출처 <span aria-hidden="true">↗</span><span class="sr-only">: ${escape(source.title)} (새 창)</span></a>`:''}</article>`;}).join('');}
+  function renderDownloads(){const items=state.data.downloads||[];$('#data-download-links').innerHTML=items.map(item=>{const url=safeUrl(item.href);return url?`<a href="${escape(url)}" download><span>${escape(item.title)}</span><small>${number(item.rows)}행 · ${escape(item.format||'CSV')}</small><span aria-hidden="true">↓</span></a>`:'';}).join('')||'<p>공개된 가공 데이터 파일이 없습니다.</p>';}
+  async function loadArchive(){try{const response=await fetch('./archive/catalog.json');if(!response.ok)throw new Error('Archive catalog unavailable');const catalog=await response.json();$('#archive-list').innerHTML=(catalog.items||[]).map((item,index)=>{const url=safeUrl(item.url);if(!url)return'';return`<a class="archive-item" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="archive-item-index">${String(index+1).padStart(2,'0')}</span><div><span class="archive-kind">${escape(item.kind||'RESEARCH FILE')}</span><h3>${escape(item.title)}</h3><p>${escape(item.description||'')}</p></div><span class="archive-open" aria-hidden="true">↗</span><span class="sr-only"> 새 창에서 열기</span></a>`;}).join('')||'<p>자료실에서 공개할 파일을 준비하고 있습니다.</p>';}catch{$('#archive-list').innerHTML='<p class="notice">자료실 목록을 불러오지 못했습니다. <a href="https://github.com/hansol000808/logistics-flow/tree/main/archive" target="_blank" rel="noopener noreferrer">GitHub 자료실</a>에서도 공개 파일을 확인할 수 있습니다.</p>';}}
+  function bindEvents(){
+    $$('.mode-button').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));$('.mode-tabs').addEventListener('keydown',event=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;const buttons=$$('.mode-button').filter(b=>!b.disabled),index=buttons.indexOf(document.activeElement);if(index<0)return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;buttons[next].focus();setMode(buttons[next].dataset.mode);});
+    $$('.map-view-controls button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));$('#section-search').addEventListener('input',event=>{state.query=event.target.value;const visible=visibleItems();state.selected=visible.find(item=>item.id===state.selected?.id)||visible[0]||null;renderList();if(state.selected)selectItem(state.selected,false);else{$('#selection-detail').innerHTML='<h3 id="detail-title">일치하는 항목이 없습니다.</h3><p class="detail-note">검색어나 기준월을 바꿔 주세요.</p>';refreshMap();}});$('#cj-period').addEventListener('change',event=>{state.cjPeriod=event.target.value;updateMode();});
+    $('#section-list').addEventListener('click',event=>{const button=event.target.closest('button[data-item-id]');if(!button)return;const item=itemsForMode().find(r=>r.id===button.dataset.itemId);if(item)selectItem(item,true);});[$('#show-logistics'),$('#show-ports')].forEach(input=>input.addEventListener('change',drawHubs));
+    $('#hub-buttons').addEventListener('click',event=>{const button=event.target.closest('[data-hub-id]');if(!button)return;const hub=state.data.facilities.find(h=>h.id===button.dataset.hubId);if(hub)selectHub(hub,true);});
+    ['road-search','road-metric','road-sort','road-selection'].forEach(id=>$('#'+id).addEventListener(id==='road-search'?'input':'change',renderRoads));$('#road-results').addEventListener('click',event=>{const button=event.target.closest('[data-road-id]');if(!button)return;const row=state.data.roads.allSections.find(r=>r.id===button.dataset.roadId);if(row)selectRoad(row);});
+    $('#road-direction-detail').addEventListener('click',event=>{const button=event.target.closest('[data-map-road]');if(!button)return;setMode('compare');const item=itemsForMode().find(r=>r.id===button.dataset.mapRoad);if(item){selectItem(item,true);$('#explore').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}});
   }
-
-  function refreshMap() {
-    if (!state.map) return;
-    state.layer.clearLayers();
-    state.drawn = [];
-    const info = modeInfo[state.mode];
-    const items = visibleItems();
-    const max = Math.max(1, ...itemsForMode().map((item) => item[info.value] || 0));
-    if (state.mode === 'postal') {
-      // Area, rather than radius, is proportional to the delivery count.
-      items.forEach((region) => {
-        const selected = state.selected?.id === region.id;
-        const circle = L.circleMarker(region.center,{radius:38*Math.sqrt(region.postal2020/max),color:selected ? '#a74822' : info.color,weight:selected ? 2.5 : 1.5,fillColor:selected ? '#bd5526' : info.color,fillOpacity:.28}).addTo(state.layer);
-        circle.bindTooltip(`${escape(region.name)} · ${number(region.postal2020)}개`,{direction:'top'});
-        circle.on('click',() => selectItem(region,false));
-      });
-      items.forEach((region) => {
-        const icon = L.divIcon({className:'region-icon',html:`<span class="region-label">${escape(region.name)}</span>`,iconSize:[0,0],iconAnchor:[0,0]});
-        const marker = L.marker(region.center,{icon,title:`${region.name} 권역 배달량 상세`,keyboard:true}).addTo(state.layer);
-        marker.on('click',() => selectItem(region,false));
-      });
-      return;
-    }
-    [...items].reverse().forEach((item) => {
-      if (!item.coordinates?.every((point) => Array.isArray(point) && point.length === 2 && point.every(Number.isFinite))) return;
-      const width = 3.5;
-      const selected = state.selected?.id === item.id;
-      const line = L.polyline(item.coordinates, {color:selected ? '#9e3a15' : info.color,weight:selected ? width+3 : width,opacity:selected ? 1 : .85,lineCap:'round'}).addTo(state.layer);
-      line.bindTooltip(`${escape(item.name)} · ${number(item[info.value])} ${info.unit}`, {sticky:true,direction:'top'});
-      line.on('click', () => selectItem(item, false));
-      state.drawn.push({line,item,width});
-      item.coordinates.forEach((point) => {
-        const circle = L.circleMarker(point, {radius:selected ? 3.5 : 2.5,color:info.color,weight:1,fillColor:'#fffef9',fillOpacity:1}).addTo(state.layer);
-        circle.on('click', () => selectItem(item,false));
-      });
-    });
-    const selected = state.drawn.find((entry) => entry.item.id === state.selected?.id);
-    if (selected) selected.line.bringToFront();
-  }
-
-  function renderList() {
-    const all = itemsForMode();
-    const items = visibleItems();
-    const info = modeInfo[state.mode];
-    $('#list-count').textContent = `${items.length} / ${all.length}개`;
-    $('#section-list').innerHTML = items.length ? items.map((item,index) => `<tr class="${state.selected?.id === item.id ? 'selected-row' : ''}"><td><button type="button" data-item-id="${escape(item.id)}" aria-pressed="${state.selected?.id === item.id}"><span class="row-number" aria-hidden="true">${String(index+1).padStart(2,'0')}</span>${escape(item.name)}<span class="row-arrow" aria-hidden="true">↗</span><span class="sr-only"> 상세 보기</span></button></td><td>${number(item[info.value])} <span>${escape(info.unit)}</span></td><td>${state.mode === 'postal' ? '2020 · 우체국 배달실적' : '2021 · 수시조사 합계'}</td></tr>`).join('') : '<tr><td colspan="3" class="table-empty">일치하는 구간이 없습니다. 다른 이름으로 검색해 보세요.</td></tr>';
-  }
-
-  function detailMarkup(item) {
-    const info = modeInfo[state.mode];
-    if (state.mode === 'postal') {
-      const share = state.data.postal?.includedTotal ? `${(100*item.postal2020/state.data.postal.includedTotal).toFixed(1)}%` : '';
-      return `<h3 id="detail-title">${escape(item.name)} 권역</h3><p class="detail-route">${escape((item.members || []).join(' · '))}<br>${escape(item.postalOffice || '')} 기준</p><div class="detail-value"><span class="small-label">2020년 우체국 배달물량</span><strong>${number(item.postal2020)}</strong><span class="value-unit">개</span></div>${share ? `<p class="detail-route">공개된 8개 권역 합계의 ${share}</p>` : ''}<p class="detail-note">2022년 보관본의 값 · 제주 제외<br>현재 공개본과 값이 다를 수 있습니다.<br>권역 간 이동량을 뜻하지 않습니다.</p>`;
-    }
-    return `<h3 id="detail-title">${escape(item.from)}<span class="detail-direction" aria-label="와">↔</span>${escape(item.to)}</h3><p class="detail-route">${escape(item.route || '')} · 2022년 연구 선정</p><div class="detail-value"><span class="small-label">${escape(info.name)} · 양방향 합계</span><strong>${number(item[info.value])}</strong><span class="value-unit">${escape(info.unit)}</span></div><p class="detail-note">2021년 수시교통량 · 시간 항목 ‘계’<br>일평균 또는 연간 총량을 뜻하지 않습니다.</p>`;
-  }
-
-  function selectItem(item, zoomTo) {
-    state.selected = item;
-    $('#detail-kicker').textContent = state.mode === 'postal' ? 'REGIONAL DELIVERIES' : 'SELECTED SECTION';
-    $('#selection-detail').innerHTML = detailMarkup(item);
-    // Update existing rows in place so keyboard focus stays on the chosen button.
-    $$('#section-list button[data-item-id]').forEach((button) => {
-      const selected = button.dataset.itemId === item.id;
-      button.setAttribute('aria-pressed', String(selected));
-      button.closest('tr').classList.toggle('selected-row',selected);
-    });
-    refreshMap();
-    if (zoomTo && state.map && (item.center || item.coordinates?.every(Boolean))) {
-      if (state.mode === 'postal') state.map.setView(item.center,8,{animate:false});
-      else state.map.fitBounds(item.coordinates,{padding:[65,65],maxZoom:11,animate:false});
-      $$('.map-view-controls button').forEach((button) => {button.classList.remove('selected');button.setAttribute('aria-pressed','false');});
-    }
-  }
-
-  function setMode(mode) {
-    state.mode = mode;
-    state.query = '';
-    $('#section-search').value = '';
-    const postal = mode === 'postal';
-    const info = modeInfo[mode];
-    const items = itemsForMode();
-    state.selected = items[0] || null;
-    $$('.mode-button').forEach((button) => {
-      const active = button.dataset.mode === mode;
-      button.classList.toggle('active',active);
-      button.setAttribute('aria-pressed',String(active));
-    });
-    $('#data-stamp').textContent = postal ? '2020년 우체국 배달량' : '2021년 도로 교통량';
-    $('#legend-label').textContent = postal ? '원 면적 ∝ 배달량 · 대표 위치' : '2022년 연구 선정 구간';
-    $('.legend-line').style.background = info.color;
-    $('.legend-line').classList.toggle('legend-circle',postal);
-    $('.map-note').textContent = postal ? '원은 우정청 기준 권역의 배달량을 나타내며 실제 서비스 영역과 다릅니다.' : '선은 두 지점의 연결을 나타내며 실제 도로 선형과 다릅니다.';
-    $('#summary-label').textContent = postal ? '우정청 기준 연구 권역' : '연구 선정 구간';
-    $('#summary-count').textContent = number(items.length);
-    $('#summary-unit').textContent = postal ? '개 권역 · 제주 제외' : '개 구간';
-    $('#mode-description').textContent = postal ? '2022년에 사용한 2020년 배달실적입니다. 원 면적이 배달량에 비례하며, 화물의 권역 간 이동을 나타내지 않습니다.' : '2022년 연구에서 수동으로 선택한 고정 구간입니다. 전국 자동 최적화나 전체 구간 순위가 아닙니다.';
-    $('#list-title').textContent = postal ? '권역별 배달량 목록' : '선정 구간 목록';
-    $('.data-table thead th:first-child').textContent = postal ? '권역' : '구간 / 연결';
-    $('#table-value-heading').textContent = postal ? '배달량' : '양방향 교통량';
-    $('#table-caption').textContent = postal ? '우정청 기준 8개 권역의 우체국 배달량. 권역 이름 버튼을 누르면 상세 정보를 확인할 수 있습니다.' : '지도에 표시된 선정 구간과 교통량. 구간 이름 버튼을 누르면 상세 정보를 확인할 수 있습니다.';
-    $('#list-footnote').textContent = postal ? '2022년 보관본의 2020년 우체국 배달량입니다. 제주를 제외한 8개 권역이며, 현재 공개본과 차이가 있어 당시 값을 유지했습니다.' : '선정 구간 안에서 교통량이 많은 순서입니다. 2021년 수시조사 양방향 합계이며, 전국 전체 구간의 순위가 아닙니다.';
-    renderList();
-    if (state.selected) selectItem(state.selected,false);
-    else {
-      $('#selection-detail').innerHTML = '<h3 id="detail-title">공개 자료 준비 중</h3><p class="detail-note">이 관점의 데이터는 현재 공개본에 포함되지 않았습니다.</p>';
-      refreshMap();
-    }
-    setView('national');
-  }
-
-  function bindEvents() {
-    $$('.mode-button').forEach((button) => button.addEventListener('click', () => setMode(button.dataset.mode)));
-    $('.mode-tabs').addEventListener('keydown', (event) => {
-      if (!['ArrowRight','ArrowLeft','Home','End'].includes(event.key)) return;
-      const buttons = $$('.mode-button').filter((button) => !button.disabled);
-      const index = buttons.indexOf(document.activeElement);
-      if (index < 0) return;
-      event.preventDefault();
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length-1 : (index+(event.key === 'ArrowRight' ? 1 : -1)+buttons.length)%buttons.length;
-      buttons[next].focus();
-      setMode(buttons[next].dataset.mode);
-    });
-    $$('.map-view-controls button').forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
-    $('#section-search').addEventListener('input', (event) => {
-      state.query = event.target.value;
-      renderList();
-      refreshMap();
-    });
-    $('#section-list').addEventListener('click', (event) => {
-      const button = event.target.closest('button[data-item-id]');
-      if (!button) return;
-      const item = itemsForMode().find((entry) => entry.id === button.dataset.itemId);
-      if (item) selectItem(item,true);
-    });
-  }
-
-  async function start() {
-    try {
-      const response = await fetch('./data/research.json');
-      if (!response.ok) throw new Error(`Research data: HTTP ${response.status}`);
-      state.data = await response.json();
-      (state.data.regions || []).forEach((region) => state.regions.set(region.id,region));
-      if (!state.data.regions?.some((region) => Number.isFinite(region.postal2020))) {
-        const postalButton = $('.mode-button[data-mode="postal"]');
-        postalButton.disabled = true;
-        postalButton.title = '권역별 배달량 자료는 현재 공개본에 포함되지 않았습니다.';
-        postalButton.setAttribute('aria-label','권역별 배달량: 현재 공개본 미포함');
-      }
-      renderSources();
-      initMap();
-      bindEvents();
-      setMode('smallMedium');
-    } catch (error) {
-      $('#selection-detail').innerHTML = '<h3 id="detail-title">자료를 불러오지 못했습니다.</h3><p class="detail-note">네트워크 연결을 확인한 뒤 페이지를 새로고침해 주세요.</p>';
-      $('#section-list').innerHTML = '<tr><td colspan="3" class="table-empty">자료를 불러올 수 없습니다. 연구 방법과 출처는 GitHub 저장소에서도 확인할 수 있습니다.</td></tr>';
-      $('#source-list').innerHTML = '<p class="notice">출처 정보는 <a href="https://github.com/hansol000808/logistics-flow">GitHub 저장소</a>에서 확인할 수 있습니다.</p>';
-      $$('.mode-button, .map-view-controls button').forEach((button) => {button.disabled = true;});
-      $('#section-search').disabled = true;
-      showMapStatus('데이터를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.');
-      console.error(error);
-    }
+  async function start(){loadArchive();try{const response=await fetch('./data/research.json');if(!response.ok)throw new Error(`Research data: HTTP ${response.status}`);state.data=await response.json();(state.data.regions||[]).forEach(r=>state.regions.set(r.id,r));(state.data.cj?.geojson?.features||[]).forEach(f=>state.cjFeatures.set(f.id||f.properties.id,f));$('#cj-period').innerHTML='<option value="all">전체 · 혼합 기간</option>'+(state.data.cj?.periods||[]).map(p=>`<option value="${escape(p)}">${escape(p)}</option>`).join('');
+    const available={smallMedium:state.data.roads?.features?.length,large:state.data.roads?.features?.length,compare:state.data.roads?.features?.length,postal:state.data.regions?.some(r=>Number.isFinite(r.postal2020)),od:state.data.od?.pairs?.length,cj:state.data.cj?.districts?.length};$$('.mode-button').forEach(button=>{if(!available[button.dataset.mode]){button.disabled=true;button.title='이 분석 자료를 불러오지 못했습니다.';}});renderSources();renderHubs();renderMatrix();renderRoads();renderDownloads();initMap();bindEvents();setMode('smallMedium');
+    }catch(error){$('#selection-detail').innerHTML='<h3 id="detail-title">자료를 불러오지 못했습니다.</h3><p class="detail-note">네트워크 연결을 확인한 뒤 새로고침해 주세요.</p>';$('#section-list').innerHTML='<tr><td colspan="3" class="table-empty">자료를 불러올 수 없습니다. 잠시 후 새로고침해 주세요.</td></tr>';$('#road-results').innerHTML='<tr><td colspan="3" class="table-empty">도로 자료를 불러오지 못했습니다.</td></tr>';$('#road-result-count').textContent='자료 불러오기 실패';$('#source-list').innerHTML='<p class="notice">출처 정보는 <a href="https://github.com/hansol000808/logistics-flow">GitHub 저장소</a>에서 확인할 수 있습니다.</p>';$$('.mode-button,.map-view-controls button,.analysis-controls input,.road-filters input,.road-filters select,#section-search,#cj-period').forEach(el=>el.disabled=true);showMapStatus('데이터를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.');console.error(error);}
   }
   start();
 })();

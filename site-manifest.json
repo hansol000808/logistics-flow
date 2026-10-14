@@ -1,11 +1,11 @@
 {
   "project": "logistics-flow",
-  "built_at_utc": "2026-10-10T17:17:23.184699+00:00",
+  "built_at_utc": "2026-10-14T14:05:44.178234+00:00",
   "files": [
     {
       "path": ".gitignore",
-      "bytes": 647,
-      "sha256": "713c4d6fa8d8761a2b252a10a295690133516c9686dbce8621cdf381dc9a42a6"
+      "bytes": 1086,
+      "sha256": "1cb2a76a54ef2be0450d823216a652d58dfd5530d69899ebbd33b2da1c474340"
     },
     {
       "path": ".nojekyll",
@@ -14,28 +14,93 @@
     },
     {
       "path": "DATA_SOURCES.md",
-      "bytes": 6170,
-      "sha256": "d3cf2dbf993ef22c99ec2c0f46575ea3370d0de56514bebbfad39f6057eca5b5"
+      "bytes": 6601,
+      "sha256": "335f0f3d4ab865d9c4b89a56d769fec4d7420b3df48d6a95524f06fa6d0cc6a4"
     },
     {
       "path": "README.md",
-      "bytes": 6149,
-      "sha256": "cd180b313e8e12217a9c60d3700968936613271173cc599222263a9452672949"
+      "bytes": 5493,
+      "sha256": "ad5a1a2b375bedb1cd3048623029ed61c064ad98294ac0ef1a622e22118ecc86"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 1572,
-      "sha256": "1b7c943809b8179c527aa3fe5ba09e0f2926da9c8d91355a66904d7141a850bc"
+      "bytes": 2156,
+      "sha256": "015bb249d4762c5175cd603e39bee732300bec540e0b2e03e78c9d22e87b17cd"
     },
     {
       "path": "app.js",
-      "bytes": 17414,
-      "sha256": "a296596fcee8a4779552402626959752aace6072c94dbf3949fc9e03600b8093"
+      "bytes": 31301,
+      "sha256": "b167981ac15c3a7e86b17c447ba2305f9bf70299dae2f64a435cc749dfc6768a"
+    },
+    {
+      "path": "archive/PUBLIC_COPY_NOTES.txt",
+      "bytes": 2349,
+      "sha256": "07361ad5aac15e9c2da0b82e9e992cb257d94393c7941fd2304959c1bbd0ce87"
+    },
+    {
+      "path": "archive/catalog.json",
+      "bytes": 1994,
+      "sha256": "ad191bc5e476ce5ba303c0148b56d51099b187905d1577cc3dd6b81fb9afddfe"
+    },
+    {
+      "path": "archive/original-map-1.html",
+      "bytes": 67300,
+      "sha256": "7cf2ebd0136a1162db906a520119ea63459a78f3039e7b1d8b45822d93f816f1"
+    },
+    {
+      "path": "archive/original-map-2.html",
+      "bytes": 21095,
+      "sha256": "631fea3c6e5e1ecfa9512b61ba10da3ad1e70a12e0029342a7542a2a72b58eef"
+    },
+    {
+      "path": "archive/original-map-3-1.html",
+      "bytes": 34192,
+      "sha256": "a4abebc5ec38a80b9e4b06cd41cf980c292e307476f808f01daf6940033269bd"
+    },
+    {
+      "path": "archive/original-map-3-2.html",
+      "bytes": 24909,
+      "sha256": "f576e8b477ee258ec1bbce16d7b9d0a706b708b4fdfffe111c18ec500ae19fc1"
+    },
+    {
+      "path": "archive/research-notebook.ipynb",
+      "bytes": 19130,
+      "sha256": "347c886f1492763815fd68706c2908a669cc5955eaead9cccbc526f302a41ca2"
+    },
+    {
+      "path": "data/cj_districts.csv",
+      "bytes": 813,
+      "sha256": "2a1a614ecd035eb59e490bb6474b1f19721210477c45824190af7a632c74215d"
+    },
+    {
+      "path": "data/facilities_2022.csv",
+      "bytes": 4103,
+      "sha256": "e9bf5dd0b20d69662d0a61c4bcf51b5a82c1439956835b15f9c97d4213cda01f"
+    },
+    {
+      "path": "data/od_2020_matrix.csv",
+      "bytes": 699,
+      "sha256": "30b9c45356204cc9b964e339ddbef518dd02552018bfde52dabd1e5853d0c845"
+    },
+    {
+      "path": "data/postal_2020_regions.csv",
+      "bytes": 480,
+      "sha256": "6a102d8971f41f87c7213e398b45f1aa9584561a9fd577bffa295612ac61d403"
     },
     {
       "path": "data/research.json",
-      "bytes": 28101,
-      "sha256": "650e88ec4242784ab1e39eb26b4e2245eb47f513a484a5437b67cd33806027bd"
+      "bytes": 646754,
+      "sha256": "42dba8cd250aa0ba11c5971d1153fe55810a4e5744bf519f035e94c7d3ec3816"
+    },
+    {
+      "path": "data/roads_2021_directions.csv",
+      "bytes": 80059,
+      "sha256": "8f997ddeefd15fadff7b1e0911b977abfbc24c17b87107cc78a8eaeb1e9d73da"
+    },
+    {
+      "path": "data/roads_2021_sections.csv",
+      "bytes": 37570,
+      "sha256": "d9ff253dd90a22d69991e59529f79af7cc7d016166926a3759641ce267ab5d22"
     },
     {
       "path": "favicon.svg",
@@ -44,8 +109,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 13170,
-      "sha256": "fa0c0ec93c9754ee658536c14ec5c9950ac509141382499e3e36ca1db3bdaaa5"
+      "bytes": 21941,
+      "sha256": "4d3407709e8ab9a662682e3d7b70469a3f65e61f691e7a4550f820a8df0ff991"
     },
     {
       "path": "requirements.txt",
@@ -54,13 +119,13 @@
     },
     {
       "path": "scripts/build_data.py",
-      "bytes": 16683,
-      "sha256": "49cc389d4250a9cb7d7920ad535559fa452e2653596868f18275beeba383802e"
+      "bytes": 29052,
+      "sha256": "5a81cd12c838746aa09597a6886b1b25eba8f0a303291087f599b8e302000004"
     },
     {
       "path": "styles.css",
-      "bytes": 24580,
-      "sha256": "0f48c9c7fb1365980bb45cc2044afd7926a563a39fe8c80accf17e42593b0af2"
+      "bytes": 40073,
+      "sha256": "ce5868adc370c4b8b18fed672d1278eefeffb0c99386892165c040047ea3fa13"
     },
     {
       "path": "vendor/leaflet/LICENSE",
@@ -109,13 +174,12 @@
     }
   ],
   "exclusions": [
-    "Original datasets and notebooks",
-    "CJ and OD values or visualizations",
-    "Personal and classroom materials",
-    "Local audit and credentials"
+    "Other students and class material",
+    "Personal identifiers and credentials",
+    "Unmodified development folder"
   ],
   "external_services": [
     "OpenStreetMap standard raster tiles"
   ],
-  "notes": "Manifest excludes itself and Git metadata."
+  "notes": "Manifest excludes itself and Git metadata. Research data scope expanded on 2026-10-14 following the project owner confirmation."
 }
