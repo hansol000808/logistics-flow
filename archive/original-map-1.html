@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>서울 자치구 CJ 분석 | 2022 원본 지도</title>
+<title>서울 자치구 CJ 분석 | 분석 지도</title>
 <script src="../vendor/leaflet/leaflet.js"></script>
 <link rel="stylesheet" href="../vendor/leaflet/leaflet.css"><style>body{font-family:Arial,"Malgun Gothic",sans-serif}.archive-banner{position:absolute;top:0;left:0;right:0;z-index:2000;min-height:66px;box-sizing:border-box;background:#fffdf8;border-bottom:1px solid #bfc8c1;padding:9px 14px;color:#173f3c;font-size:12px;line-height:1.45}.archive-banner a{color:#173f3c;font-weight:bold}.archive-banner strong{font-size:15px;display:block;margin:2px 0}.folium-map{position:absolute!important;top:91px!important;bottom:0!important;height:auto!important}.archive-point{display:block;width:28px;height:28px;border:2px solid white;border-radius:50%;text-align:center;line-height:24px;color:white;font:bold 19px Georgia;box-shadow:0 2px 4px #555}.archive-legend{padding:10px;background:white;font-size:11px;box-shadow:0 1px 4px #888;width:280px;max-width:70vw}.archive-legend .scale{height:10px;background:linear-gradient(90deg,#eff3ff,#c6dbef,#9ecae1,#6baed6,#3182bd,#08519c)}.archive-legend .ticks{display:flex;justify-content:space-between;font-size:10px;margin-top:3px}@media(max-width:600px){.folium-map{top:122px!important}.archive-banner{font-size:11px}.archive-banner strong{font-size:13px}.archive-legend{width:210px}}</style><script>L.AwesomeMarkers={icon:function(options){var color=options.markerColor==='green'?'#63a32f':'#2a8fc7';return L.divIcon({className:'archive-point-wrapper',html:'<span class="archive-point" style="background:'+color+'">i</span>',iconSize:[28,28],iconAnchor:[14,14]});}};</script>
 
@@ -39,7 +39,7 @@
 
 
 </head>
-<body><header class="archive-banner"><a href="../index.html#archive">← 연구 아카이브</a><strong>서울 자치구 CJ 분석 · 2022년 저장 지도</strong>구별 기준월이 다른 원자료의 저장 표현입니다. 경유지 총건수를 같은 시점의 택배 수요로 비교할 수 없습니다.</header>
+<body><header class="archive-banner"><a href="../index.html#archive">← 분석 자료실</a><strong>서울 자치구 CJ 분석</strong>구별 기준월이 다른 자료의 경유지 총건수를 표시합니다. 같은 시점의 택배 수요로 비교할 수 없습니다.</header>
 
 
             <div class="folium-map" id="map_e9ea9be4b4b811f98bec6a0acf0295b2" ></div>
@@ -110,6 +110,6 @@
 
 
 
-var originalLegend=L.control({position:'bottomright'});originalLegend.onAdd=function(){var d=L.DomUtil.create('div','archive-legend');d.innerHTML='<strong>원본 색상 범례</strong><div class="scale"></div><div class="ticks"><span>226,091</span><span>452,172</span><span>678,252</span></div><div>경유지 총건수 · 구별 기준월 상이</div>';return d;};originalLegend.addTo(map_e9ea9be4b4b811f98bec6a0acf0295b2);
+var originalLegend=L.control({position:'bottomright'});originalLegend.onAdd=function(){var d=L.DomUtil.create('div','archive-legend');d.innerHTML='<strong>색상 범례</strong><div class="scale"></div><div class="ticks"><span>226,091</span><span>452,172</span><span>678,252</span></div><div>경유지 총건수 · 구별 기준월 상이</div>';return d;};originalLegend.addTo(map_e9ea9be4b4b811f98bec6a0acf0295b2);
 </script>
 </html>

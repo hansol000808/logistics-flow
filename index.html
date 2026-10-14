@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#163f3c">
-  <meta name="description" content="2022년 연구 아카이브. 서울 자치구 CJ 경유지 집계, 권역 간 화물 OD, 우체국 배달량과 전국 도로 교통량을 살펴보는 인터랙티브 지도.">
+  <meta name="description" content="지하물류 분석. 서울 자치구 CJ 경유지 집계, 권역 간 화물 OD, 우체국 배달량과 전국 도로 교통량을 살펴보는 인터랙티브 지도.">
   <title>물류가 모이는 곳 — 지하물류 연구 아카이브</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
@@ -21,14 +21,14 @@
   <main id="main">
     <section class="hero" aria-labelledby="project-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot"></span> 연구 아카이브 <span class="separator">/</span> 2022년 2학기</p>
+        <p class="eyebrow"><span class="status-dot"></span> 물동량 분석 <span class="separator">/</span> 공간 탐색</p>
         <h1 id="project-title">물류가<br>모이는 곳,<br><span>그 아래의 가능성.</span></h1>
         <p class="project-name">지하물류체계 구축을 위한<br class="mobile-break"> 물동량 집중 구간 탐구</p>
         <p class="hero-description">어디에서 시작해야 할까. 서울의 경유지 집계부터 전국 권역 사이의 화물 이동, 도로와 물류거점까지. 서로 다른 규모의 흐름을 함께 읽은 연구입니다.</p>
         <a class="primary-link" href="#explore">연구 지도 살펴보기 <span aria-hidden="true">↘</span></a>
       </div>
       <div class="hero-figure">
-        <div class="figure-top"><span>RESEARCH NOTE 01</span><span>2022 — ARCHIVED</span></div>
+        <div class="figure-top"><span>RESEARCH NOTE 01</span><span>FLOW ANALYSIS</span></div>
         <svg class="flow-figure" viewBox="0 0 500 360" role="img" aria-labelledby="flow-title flow-description">
           <title id="flow-title">지상 물류와 지하 연결의 연구 개념도</title>
           <desc id="flow-description">여러 물류 거점 사이의 지상 흐름을 관찰하여 지하 물류 연결의 가능성을 탐구하는 개념도이며, 실제 노선을 나타내지 않습니다.</desc>
@@ -49,7 +49,7 @@
 
     <section class="research-context" aria-label="연구의 범위">
       <p><span class="small-label">THE QUESTION</span>“많이 오가는 곳”은<br>새로운 물류체계의 출발점이 될 수 있을까?</p>
-      <div><p>서울 CJ 경유지 집계, 우체국 배달량, 권역 간 화물 OD, 도로 교통량의 네 분석을 원자료와 연결했습니다. 2022년의 관찰과 가설 수정, 단계별 구상을 함께 읽을 수 있습니다.</p><p class="muted">이 지도는 과거 연구 기록입니다. 실시간 교통 정보나 최적 노선, 건설 타당성의 검증 결과를 제시하지 않습니다.</p></div>
+      <div><p>서울 CJ 경유지 집계, 우체국 배달량, 권역 간 화물 OD, 도로 교통량의 네 분석을 원자료와 연결했습니다. 분석 결과와 가설 수정, 단계별 구상을 함께 읽을 수 있습니다.</p><p class="muted">이 지도는 물동량 분포를 탐색하는 분석 결과입니다. 실시간 교통 정보나 최적 노선, 건설 타당성의 검증 결과를 제시하지 않습니다.</p></div>
     </section>
 
     <section id="explore" class="explore-section" aria-labelledby="explore-title">
@@ -72,21 +72,21 @@
           <div class="map-panel">
             <div id="map" aria-label="물류 집중 구간 지도"></div>
             <div class="map-view-controls" role="group" aria-label="지도 범위"><button type="button" data-view="national" class="selected" aria-pressed="true">전국 보기</button><button type="button" data-view="capital" aria-pressed="false">수도권</button></div>
-            <div class="map-legend" id="map-legend"><span class="legend-line"></span><span id="legend-label">2022년 연구 선정 구간</span></div>
+            <div class="map-legend" id="map-legend"><span class="legend-line"></span><span id="legend-label">연구 선정 구간</span></div>
             <p class="map-status" id="map-status" role="status" hidden></p>
             <div class="map-note">선은 두 지점의 연결을 나타내며 실제 도로 선형과 다릅니다.</div>
           </div>
           <aside class="detail-panel" aria-labelledby="detail-title">
             <div class="detail-kicker"><span id="detail-kicker">SELECTED SECTION</span><span aria-hidden="true">↗</span></div>
             <div id="selection-detail" aria-live="polite"><p class="selection-prompt">자료를 불러오고 있습니다.</p></div>
-            <div class="explorer-summary"><span class="small-label" id="summary-label">연구 선정 구간</span><p><strong id="summary-count">—</strong><span id="summary-unit">개 구간</span></p><p id="mode-description">2022년 연구에서 수동으로 선택한 구간입니다.</p></div>
+            <div class="explorer-summary"><span class="small-label" id="summary-label">연구 선정 구간</span><p><strong id="summary-count">—</strong><span id="summary-unit">개 구간</span></p><p id="mode-description">분석 과정에서 수동으로 선택한 구간입니다.</p></div>
           </aside>
         </div>
         <div class="list-toolbar"><div><h3 id="list-title">선정 구간 목록</h3><span id="list-count"></span></div><label class="search-field"><span class="sr-only">구간 또는 지역 검색</span><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m12 12 5 5" stroke="currentColor" stroke-width="1.5"/></svg><input id="section-search" type="search" placeholder="구간·지역 검색" autocomplete="off"></label></div>
         <div class="table-scroll"><table class="data-table"><caption class="sr-only" id="table-caption">지도에 표시된 선정 구간과 교통량. 구간 이름 버튼을 누르면 상세 정보를 확인할 수 있습니다.</caption><thead><tr><th scope="col">구간 / 연결</th><th scope="col" id="table-value-heading">양방향 교통량</th><th scope="col" class="table-context-heading">자료 기준</th></tr></thead><tbody id="section-list"><tr><td colspan="3">자료를 불러오는 중입니다.</td></tr></tbody></table></div>
         <p class="list-footnote" id="list-footnote">목록은 교통량이 많은 순서입니다. 양방향 합계이며, 전국 전체 구간의 순위가 아닙니다.</p>
         <details id="od-matrix-panel" class="extra-panel" hidden><summary>방향별 8 × 8 화물 OD 표 보기 <span>행: 출발 / 열: 도착</span></summary><p class="list-footnote">2020년 · 톤/년. 대각선은 권역 내부 이동이며, 지도에 표시한 서로 다른 권역 간 28개 연결에는 포함되지 않습니다.</p><div class="matrix-scroll" tabindex="0" aria-label="방향별 화물 수송량 표, 가로로 스크롤할 수 있습니다"><table id="od-matrix" class="matrix-table"></table></div></details>
-        <details class="extra-panel" id="hub-list"><summary>물류시설과 항만 목록 <span id="hub-list-count">22개 거점</span></summary><p class="list-footnote">2022년 연구에 입력한 거점과 근사 위치입니다. 시설의 현재 운영 상태를 뜻하지 않습니다. 이름을 누르면 지도에서 위치를 확인할 수 있습니다.</p><div id="hub-buttons" class="hub-buttons"></div><p id="hub-detail" class="hub-detail" aria-live="polite">거점을 선택해 당시 연구에 사용한 위치를 확인하세요.</p></details>
+        <details class="extra-panel" id="hub-list"><summary>물류시설과 항만 목록 <span id="hub-list-count">22개 거점</span></summary><p class="list-footnote">분석에 사용한 거점과 근사 위치입니다. 시설의 현재 운영 상태를 뜻하지 않습니다. 이름을 누르면 지도에서 위치를 확인할 수 있습니다.</p><div id="hub-buttons" class="hub-buttons"></div><p id="hub-detail" class="hub-detail" aria-live="polite">거점을 선택해 분석에 사용한 위치를 확인하세요.</p></details>
       </div>
       <noscript><p class="notice">지도 탐색은 JavaScript가 필요합니다. 아래 연구 방법과 출처는 JavaScript 없이도 읽을 수 있습니다.</p></noscript>
     </section>
@@ -94,26 +94,26 @@
     <section id="road-data" class="road-data-section" aria-labelledby="road-data-title">
       <div class="section-heading"><div><p class="eyebrow">02 <span class="separator">/</span> FULL ROAD DATA</p><h2 id="road-data-title">선택한 구간 밖도,<br>전체 자료에서 확인하기.</h2></div><p>2021년 수시교통량의 전체 구간을<br>차종별로 검색하고 비교합니다.</p></div>
       <div class="road-browser"><div class="road-filters"><label>구간·노선 검색<input type="search" id="road-search" placeholder="예: 경부선, 수원신갈" autocomplete="off"></label><label>비교 지표<select id="road-metric"><option value="smallMedium">중소형 화물차</option><option value="large">대형 화물차</option><option value="freight">화물차 합계</option><option value="totalVehicles">전체 차량</option></select></label><label>정렬<select id="road-sort"><option value="desc">많은 순</option><option value="asc">적은 순</option><option value="name">구간 이름순</option><option value="route">노선 이름순</option></select></label><label>연구 선정<select id="road-selection"><option value="all">전체 구간</option><option value="selected">연구 선정 구간</option><option value="unselected">그 외 구간</option></select></label></div>
-      <div class="road-results-header"><h3>전체 도로 구간</h3><span id="road-result-count" role="status">자료를 불러오는 중입니다.</span></div><div class="road-table-scroll" tabindex="0" aria-label="전체 도로 교통량 표"><table class="road-table"><caption class="sr-only">전체 도로 구간의 양방향 교통량. 구간 이름을 선택하면 방향별 상세가 표시됩니다.</caption><thead><tr><th scope="col">구간 / 노선</th><th scope="col" id="road-metric-heading">중소형 화물차</th><th scope="col">2022년 선정</th></tr></thead><tbody id="road-results"><tr><td colspan="3">자료를 불러오는 중입니다.</td></tr></tbody></table></div>
+      <div class="road-results-header"><h3>전체 도로 구간</h3><span id="road-result-count" role="status">자료를 불러오는 중입니다.</span></div><div class="road-table-scroll" tabindex="0" aria-label="전체 도로 교통량 표"><table class="road-table"><caption class="sr-only">전체 도로 구간의 양방향 교통량. 구간 이름을 선택하면 방향별 상세가 표시됩니다.</caption><thead><tr><th scope="col">구간 / 노선</th><th scope="col" id="road-metric-heading">중소형 화물차</th><th scope="col">연구 선정</th></tr></thead><tbody id="road-results"><tr><td colspan="3">자료를 불러오는 중입니다.</td></tr></tbody></table></div>
       <div id="road-direction-detail" class="road-direction-detail" aria-live="polite"><h3>방향별 수치를 확인하세요</h3><p>목록의 구간 이름을 누르면 기점·종점 방향별 값을 볼 수 있습니다.</p></div><p class="list-footnote">단위: 대 · 수시조사 시간 항목 ‘계’의 기점·종점 합계입니다. 일평균이나 연간 총량을 뜻하지 않습니다. 좌표가 있는 연구 선정 구간만 지도에 연결하며, 나머지 구간의 위치는 추정하지 않습니다.</p></div>
     </section>
 
     <section id="method" class="method-section" aria-labelledby="method-title">
       <div class="section-heading"><div><p class="eyebrow">03 <span class="separator">/</span> RESEARCH PROCESS</p><h2 id="method-title">숫자를 연결하고,<br>해석의 범위를 남기다.</h2></div><p>물동량이 많다는 사실과<br>지하 노선이 적합하다는 판단은 다릅니다.</p></div>
-      <ol class="method-steps"><li><span class="step-number">01</span><h3>흐름의 규모 관찰</h3><p>도로의 차종별 교통량과 권역 간 기종점 자료, 우체국 배달물량을 살펴 물류가 어디로 모이는지 파악했습니다.</p><span class="step-tag">자료의 공간 단위 확인</span></li><li><span class="step-number">02</span><h3>집중 구간 탐색</h3><p>2022년 분석 과정에서 관심 구간을 수동으로 선택했습니다. 공개본은 이 선택을 보존하고 2021년 교통량 원자료의 양방향 합계를 표시합니다.</p><span class="step-tag">당시 선정 결과의 재구성</span></li><li><span class="step-number">03</span><h3>지도에서 분포 읽기</h3><p>선정 도로 구간과 권역별 우체국 배달량의 분포를 지도에서 살펴봅니다. 직선은 구간 양 끝점을 연결한 표현이며 실제 도로 경로나 제안된 지하 노선이 아닙니다.</p><span class="step-tag">시각화와 해석</span></li></ol>
-      <div class="research-record"><div class="record-heading"><span class="small-label">FOUR LENSES</span><h3>한 가지 수치로 설명되지 않는 물류</h3></div><div class="research-lenses"><article><span>서울 · CJ 경유지</span><h4>도시 안의 분포</h4><p>자치구별 경유지 집계(VIA_CNT)를 색으로 살펴봤습니다. 동부·남부권에 대한 당시 관찰은 구별 기준월이 다른 자료에서 나온 해석입니다. 같은 달의 배송량 순위로 읽을 수 없습니다.</p></article><article><span>전국 · 우체국 배달</span><h4>배달의 규모</h4><p>지방우정청을 기준으로 묶은 8개 권역의 배달실적을 비교했습니다. 수도권의 집중을 살펴보되, 다른 택배사의 실적이나 권역 사이의 이동으로 확대 해석하지 않습니다.</p></article><article><span>전국 · 화물 OD</span><h4>권역 사이의 연결</h4><p>8개 권역 사이의 방향별 화물 수송량을 살펴보고 부산권과 수도권의 연결에 주목했습니다. 지도는 양방향 합계, 행렬은 방향별 값이며 권역 내부 이동은 따로 구분합니다.</p></article><article><span>도로 · 차종별 교통</span><h4>화물의 성격 구분</h4><p>전체 차량 규모만으로 물류의 성격을 설명하기 어렵다고 보고 중소형·대형 화물차를 나눴습니다. 29개·12개 선정 집합을 비교하고 수도권 물류거점·항만과의 위치 관계를 함께 살폈습니다.</p></article></div></div>
-      <div class="hypothesis-note"><span class="small-label">A REVISED HYPOTHESIS</span><h3>“많은 차량”에서 “어떤 화물의 이동인가”로</h3><p>원래의 질문은 물동량이 집중되는 곳을 찾는 것이었습니다. 분석을 진행하며 도시 안의 배송과 장거리·대규모 운반을 하나의 체계로 설명하기 어렵다고 보고 차종과 공간 규모를 나눠 읽었습니다. 이 공개본은 중소형과 대형의 수동 선정 결과를 보존하면서 전체 도로 자료도 함께 열어, 당시 선택을 다시 비교할 수 있게 했습니다.</p></div>
-      <div class="proposal-record"><div class="record-heading"><span class="small-label">THE 2022 PROPOSAL</span><h3>당시 연구가 제안한 세 단계</h3><p>아래는 관찰을 바탕으로 한 2022년의 연결 구상입니다. 검증된 최적 노선이나 확정된 건설 계획이 아닙니다.</p></div><ol><li><span>01</span><div><h4>경부축의 대형 화물 운반</h4><p>부산권과 수도권 사이의 광역 흐름을 바탕으로 대형 화물을 운반하는 체계를 검토합니다.</p></div></li><li><span>02</span><div><h4>수도권 외곽과 서울 중심부 연결</h4><p>수도권 물류거점에서 도시 중심부로 이어지는 연결을 후속 검토 대상으로 제시합니다.</p></div></li><li><span>03</span><div><h4>서울 도심 내부의 촘촘한 연결</h4><p>특히 동부·남부권에 주목해 도시 안의 연결망을 구상했습니다. CJ 집계의 혼합 기간 한계를 함께 고려해야 합니다.</p></div></li></ol></div>
-      <div class="interpretation"><div><span class="small-label">HOW TO READ</span><h3>이 연구에서<br>읽을 수 있는 것</h3></div><div><p>도로 교통량은 차량 대수, OD는 화물 중량, 우체국 자료는 배달물량, CJ 자료는 경유지 집계입니다. 단위·공간·시점이 다른 지표를 직접 더하거나 동일한 수요로 취급하지 않습니다. 도로의 직선과 거점 좌표는 당시 입력한 근사 위치입니다.</p><p>사업성 평가에는 지질·지하 시설물, 건설비, 수요의 시간 변화, 터미널 접근성, 지하 운송으로 전환 가능한 수요 등의 추가 검토가 필요합니다. 관찰된 집중은 후속 검토의 출발점이며, 공사 타당성이나 인과관계를 증명하지 않습니다.</p></div></div>
+      <ol class="method-steps"><li><span class="step-number">01</span><h3>흐름의 규모 관찰</h3><p>도로의 차종별 교통량과 권역 간 기종점 자료, 우체국 배달물량을 살펴 물류가 어디로 모이는지 파악했습니다.</p><span class="step-tag">자료의 공간 단위 확인</span></li><li><span class="step-number">02</span><h3>집중 구간 탐색</h3><p>분석 과정에서 관심 구간을 수동으로 선택하고, 2021년 교통량 원자료의 양방향 합계를 표시했습니다.</p><span class="step-tag">선정 구간과 교통량 비교</span></li><li><span class="step-number">03</span><h3>지도에서 분포 읽기</h3><p>선정 도로 구간과 권역별 우체국 배달량의 분포를 지도에서 살펴봅니다. 직선은 구간 양 끝점을 연결한 표현이며 실제 도로 경로나 제안된 지하 노선이 아닙니다.</p><span class="step-tag">시각화와 해석</span></li></ol>
+      <div class="research-record"><div class="record-heading"><span class="small-label">FOUR LENSES</span><h3>한 가지 수치로 설명되지 않는 물류</h3></div><div class="research-lenses"><article><span>서울 · CJ 경유지</span><h4>도시 안의 분포</h4><p>자치구별 경유지 집계(VIA_CNT)를 색으로 살펴봤습니다. 동부·남부권에 대한 관찰은 구별 기준월이 다른 자료에서 나온 해석입니다. 같은 달의 배송량 순위로 읽을 수 없습니다.</p></article><article><span>전국 · 우체국 배달</span><h4>배달의 규모</h4><p>지방우정청을 기준으로 묶은 8개 권역의 배달실적을 비교했습니다. 수도권의 집중을 살펴보되, 다른 택배사의 실적이나 권역 사이의 이동으로 확대 해석하지 않습니다.</p></article><article><span>전국 · 화물 OD</span><h4>권역 사이의 연결</h4><p>8개 권역 사이의 방향별 화물 수송량을 살펴보고 부산권과 수도권의 연결에 주목했습니다. 지도는 양방향 합계, 행렬은 방향별 값이며 권역 내부 이동은 따로 구분합니다.</p></article><article><span>도로 · 차종별 교통</span><h4>화물의 성격 구분</h4><p>전체 차량 규모만으로 물류의 성격을 설명하기 어렵다고 보고 중소형·대형 화물차를 나눴습니다. 29개·12개 선정 집합을 비교하고 수도권 물류거점·항만과의 위치 관계를 함께 살폈습니다.</p></article></div></div>
+      <div class="hypothesis-note"><span class="small-label">A REVISED HYPOTHESIS</span><h3>“많은 차량”에서 “어떤 화물의 이동인가”로</h3><p>원래의 질문은 물동량이 집중되는 곳을 찾는 것이었습니다. 분석을 진행하며 도시 안의 배송과 장거리·대규모 운반을 하나의 체계로 설명하기 어렵다고 보고 차종과 공간 규모를 나눠 읽었습니다. 중소형과 대형의 수동 선정 결과와 전체 도로 자료를 함께 제공해, 선정 구간을 전체 분포와 비교할 수 있게 했습니다.</p></div>
+      <div class="proposal-record"><div class="record-heading"><span class="small-label">RESEARCH PROPOSAL</span><h3>연구에서 제안한 세 단계</h3><p>아래는 관찰을 바탕으로 한 연결 구상입니다. 검증된 최적 노선이나 확정된 건설 계획이 아닙니다.</p></div><ol><li><span>01</span><div><h4>경부축의 대형 화물 운반</h4><p>부산권과 수도권 사이의 광역 흐름을 바탕으로 대형 화물을 운반하는 체계를 검토합니다.</p></div></li><li><span>02</span><div><h4>수도권 외곽과 서울 중심부 연결</h4><p>수도권 물류거점에서 도시 중심부로 이어지는 연결을 후속 검토 대상으로 제시합니다.</p></div></li><li><span>03</span><div><h4>서울 도심 내부의 촘촘한 연결</h4><p>특히 동부·남부권에 주목해 도시 안의 연결망을 구상했습니다. CJ 집계의 혼합 기간 한계를 함께 고려해야 합니다.</p></div></li></ol></div>
+      <div class="interpretation"><div><span class="small-label">HOW TO READ</span><h3>이 연구에서<br>읽을 수 있는 것</h3></div><div><p>도로 교통량은 차량 대수, OD는 화물 중량, 우체국 자료는 배달물량, CJ 자료는 경유지 집계입니다. 단위·공간·시점이 다른 지표를 직접 더하거나 동일한 수요로 취급하지 않습니다. 도로의 직선과 거점 좌표는 분석에 사용한 근사 위치입니다.</p><p>사업성 평가에는 지질·지하 시설물, 건설비, 수요의 시간 변화, 터미널 접근성, 지하 운송으로 전환 가능한 수요 등의 추가 검토가 필요합니다. 관찰된 집중은 후속 검토의 출발점이며, 공사 타당성이나 인과관계를 증명하지 않습니다.</p></div></div>
     </section>
 
     <section id="sources" class="sources-section" aria-labelledby="sources-title">
-      <div class="section-heading"><div><p class="eyebrow">04 <span class="separator">/</span> SOURCES & SCOPE</p><h2 id="sources-title">자료와 공개 범위</h2></div><p>원자료의 시점과 단위를 확인하며<br>2022년의 연구를 읽어주세요.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">04 <span class="separator">/</span> SOURCES & SCOPE</p><h2 id="sources-title">자료와 공개 범위</h2></div><p>원자료의 기준연도와 단위를 확인하며<br>분석 결과를 읽어주세요.</p></div>
       <div id="source-list" class="source-list"><p>출처 정보를 불러오고 있습니다.</p></div>
-      <div class="archive-note"><span class="archive-symbol" aria-hidden="true">↳</span><p><strong>과거 연구를 다시 열어두는 방식</strong><br>당시의 탐색 결과와 한계를 함께 기록합니다. 원본 연구 자료 중 공개 가능한 정보만 재구성했으며, 사이트 코드와 가공 방식은 <a href="https://github.com/hansol000808/logistics-flow" target="_blank" rel="noopener noreferrer">GitHub 저장소<span aria-hidden="true"> ↗</span></a>에서 확인할 수 있습니다.</p></div>
+      <div class="archive-note"><span class="archive-symbol" aria-hidden="true">↳</span><p><strong>분석 자료와 방법</strong><br>탐색 결과와 해석 범위를 함께 기록합니다. 분석 자료와 지도, 가공 데이터를 제공하며, 사이트 코드와 가공 방식은 <a href="https://github.com/hansol000808/logistics-flow" target="_blank" rel="noopener noreferrer">GitHub 저장소<span aria-hidden="true"> ↗</span></a>에서 확인할 수 있습니다.</p></div>
     </section>
     <section id="archive" class="archive-section" aria-labelledby="archive-title"><div class="section-heading"><div><p class="eyebrow">05 <span class="separator">/</span> OPEN RESEARCH ARCHIVE</p><h2 id="archive-title">분석 자료를 직접 살펴보다.</h2></div><p>분석 코드와 지도,<br>가공 데이터를 확인합니다.</p></div><div id="archive-list" class="archive-list"><p>자료실 목록을 불러오고 있습니다.</p></div><div class="data-downloads"><span class="small-label">PROCESSED DATA / CSV</span><h3>가공 데이터를 직접 살펴보기</h3><p>공개 지도와 표에 사용한 집계 데이터입니다. 기준월·단위·집계 범위는 각 분석의 설명과 함께 읽어주세요.</p><div id="data-download-links"><p>가공 데이터 목록을 불러오는 중입니다.</p></div></div></section>
   </main>
-  <footer class="site-footer"><a class="footer-title" href="#main">물류가 모이는 곳.</a><div><span>2022 RESEARCH ARCHIVE</span><p>HAN JAEHYEOK <span aria-hidden="true">/</span> 2022년 2학기 연구</p></div><a href="https://github.com/hansol000808/logistics-flow" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a></footer>
+  <footer class="site-footer"><a class="footer-title" href="#main">물류가 모이는 곳.</a><div><span>LOGISTICS RESEARCH</span><p>HAN JAEHYEOK <span aria-hidden="true">/</span> 물동량 집중 구간 탐구</p></div><a href="https://github.com/hansol000808/logistics-flow" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a></footer>
 </body>
 </html>

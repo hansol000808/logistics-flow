@@ -48,11 +48,11 @@ REVIEWED_SOURCE_HASHES = {
 
 SOURCES = [
     {"id": "highway2021", "title": "한국도로공사 2021년 수시교통량", "period": "2021", "unit": "대 (수시조사 시간=계, 기점·종점 합계)", "url": "https://data.ex.co.kr/portal/docu/docuList?datasetId=19", "policyUrl": "https://data.ex.co.kr/portal/guide/publicDataPolicy", "status": "reviewed_for_publication", "licenseNote": "공식 목록의 2021년 수시교통량.csv(fileId=705) 및 공공데이터 자유활용 정책 확인. 다운로드 서버 오류로 공식 파일과 바이트 대조는 미완료.", "reviewedAt": "2026-10-11", "rawPublished": False},
-    {"id": "freightOD2020", "title": "2020년 지역 간 화물 OD 수송실적", "period": "2020", "unit": "톤/년", "url": "https://www.nlic.go.kr/nlic/frghtRoad0010.action", "licenseNote": "2026-10-14 프로젝트 작성자의 자료 사용 확인을 반영해 공개 범위에 포함.", "rawPublished": False},
-    {"id": "postal2020", "title": "우체국물류지원단 총괄국별 배달물량 (20210831 과거 파일)", "period": "2020", "unit": "개", "url": "https://www.data.go.kr/data/15040740/fileData.do", "archiveUrl": "https://www.data.go.kr/tcs/dss/selectDpkDetailInfo.do?publicDataDetailPk=uddi%3A05cfada8-fc6b-49df-b2a6-9578ace72f90&publicDataHistSn=1", "status": "reviewed_for_publication", "licenseNote": "20210831 과거 자료 항목의 이용허락범위 제한 없음 확인. 공식 과거 CSV와 로컬 파일의 SHA256 일치.", "reviewedAt": "2026-10-11", "archiveSnapshot": "20210831", "rawPublished": False},
-    {"id": "cjArchive", "title": "서울시 자치구단위 CJ택배차량 운행량 월별 통계 · 당시 연구용 발췌", "period": "2020-03~2021-06 (구별 기준월 혼합)", "unit": "경유지 총건수(건)", "url": "https://bigdata.seoul.go.kr/", "licenseNote": "2026-10-14 프로젝트 작성자의 자료 사용 확인을 반영해 공개 범위에 포함.", "rawPublished": False},
-    {"id": "seoulBoundary", "title": "서울 25개 자치구 경계 · 2013년 기준", "period": "2013", "unit": "GeoJSON 경계", "url": "https://github.com/southkorea/seoul-maps/blob/master/kostat/2013/json/seoul_municipalities_geo_simple.json", "licenseNote": "원본 노트북에 기록된 출처. 저장된 지도 HTML의 GeoJSON을 추출했으며 최신 행정경계로 갱신하지 않음. 공개는 프로젝트 소유자의 확인에 근거함.", "rawPublished": False},
-    {"id": "archiveGeometry", "title": "2022년 기말과제 노트북의 연구용 좌표·선택 구간·시설 메모", "period": "2022", "unit": "근사 좌표", "url": "", "licenseNote": "프로젝트 소유자의 공개 지시에 따라 연구용 좌표·시설명만 추출. 현재 시설 위치·운영 상태를 보증하는 공공시설 DB가 아님.", "rawPublished": False},
+    {"id": "freightOD2020", "title": "2020년 지역 간 화물 OD 수송실적", "period": "2020", "unit": "톤/년", "url": "https://www.nlic.go.kr/nlic/frghtRoad0010.action", "licenseNote": "프로젝트 작성자의 자료 사용 확인에 근거해 제공.", "rawPublished": False},
+    {"id": "postal2020", "title": "우체국물류지원단 총괄국별 배달물량 (2021-08-31 제공 파일)", "period": "2020", "unit": "개", "url": "https://www.data.go.kr/data/15040740/fileData.do", "archiveUrl": "https://www.data.go.kr/tcs/dss/selectDpkDetailInfo.do?publicDataDetailPk=uddi%3A05cfada8-fc6b-49df-b2a6-9578ace72f90&publicDataHistSn=1", "status": "reviewed_for_publication", "licenseNote": "2021-08-31 제공 자료의 이용허락범위 제한 없음 확인. 공식 CSV와 분석 파일의 SHA256 일치.", "reviewedAt": "2026-10-11", "archiveSnapshot": "20210831", "rawPublished": False},
+    {"id": "cjArchive", "title": "서울시 자치구단위 CJ택배차량 운행량 월별 통계 · 연구용 발췌", "period": "2020-03~2021-06 (구별 기준월 혼합)", "unit": "경유지 총건수(건)", "url": "https://bigdata.seoul.go.kr/", "licenseNote": "프로젝트 작성자의 자료 사용 확인에 근거해 제공.", "rawPublished": False},
+    {"id": "seoulBoundary", "title": "서울 25개 자치구 경계 · 2013년 기준", "period": "2013", "unit": "GeoJSON 경계", "url": "https://github.com/southkorea/seoul-maps/blob/master/kostat/2013/json/seoul_municipalities_geo_simple.json", "licenseNote": "연구 노트북에 기록된 출처. 지도 HTML의 GeoJSON에서 2013년 기준 행정경계를 추출함. 공개는 프로젝트 소유자의 확인에 근거함.", "rawPublished": False},
+    {"id": "archiveGeometry", "title": "연구 노트북의 좌표·선택 구간·시설 메모", "period": "2022", "unit": "근사 좌표", "url": "", "licenseNote": "프로젝트 소유자의 공개 지시에 따라 연구용 좌표·시설명만 추출. 현재 시설 위치·운영 상태를 보증하는 공공시설 DB가 아님.", "rawPublished": False},
 ]
 
 for _source in SOURCES:
@@ -102,7 +102,7 @@ def notebook_geometry(path: Path):
             color = next(ast.literal_eval(x.value) for x in node.keywords if x.arg == "color")
             require(color in ("red", "orange"), "Unexpected selection group")
             road_lines.append((first, last, color, [coordinates[first], coordinates[last]]))
-    require(len(road_lines) == 41, "Expected 41 hand-selected lines from the 2022 archive")
+    require(len(road_lines) == 41, "Expected 41 hand-selected research lines")
     return all_coordinates, road_lines
 
 
@@ -121,7 +121,7 @@ def notebook_facilities(path: Path):
             require(match is not None, "Unexpected facility marker syntax")
             coordinates = ast.literal_eval(match.group(1))
             require(len(coordinates) == 2 and all(isinstance(v, (int, float)) for v in coordinates), "Invalid facility coordinates")
-            facilities.append({"id": f"facility-{len(facilities) + 1:02}", "name": match.group(3).strip(), "type": "port" if match.group(2) == "blue" else "logistics", "coordinates": coordinates, "note": "2022년 노트북에 입력한 시설명과 근사 좌표. 현재 명칭·위치·운영 여부를 확인한 시설 목록이 아니다.", "sourceId": "archiveGeometry"})
+            facilities.append({"id": f"facility-{len(facilities) + 1:02}", "name": match.group(3).strip(), "type": "port" if match.group(2) == "blue" else "logistics", "coordinates": coordinates, "note": "연구 노트북에 입력한 시설명과 근사 좌표. 현재 명칭·위치·운영 여부를 확인한 시설 목록이 아니다.", "sourceId": "archiveGeometry"})
     require(len(facilities) == 22 and sum(x["type"] == "logistics" for x in facilities) == 20, "Expected 20 logistics facilities and 2 ports")
     return facilities
 
@@ -149,7 +149,7 @@ def cj_data(path: Path, map_html: Path):
     features = [{"type": "Feature", "id": item["id"], "properties": dict(item), "geometry": boundaries[item["name"]]["geometry"]} for item in districts]
     periods = sorted({item["period"] for item in districts})
     require(len(periods) == 15, "Expected the original archive's 15 mixed months")
-    return {"sourceId": "cjArchive", "geometrySourceId": "seoulBoundary", "metric": value_column, "unit": "건", "yearNote": f"{periods[0]}~{periods[-1]}, 구별로 서로 다른 {len(periods)}개 기준월", "periods": periods, "districts": districts, "geojson": {"type": "FeatureCollection", "features": features}, "comparisonNote": "25개 구의 기준월이 서로 다르다. 같은 시점의 구별 물류 수요 비교나 우선순위로 해석할 수 없으며 경유지 총건수를 배송 완료 건수로 바꾸어 읽지 않는다.", "geometryNote": "2022년 저장 지도에 포함된 2013년 서울 자치구 경계. 현재 행정경계가 아니다."}
+    return {"sourceId": "cjArchive", "geometrySourceId": "seoulBoundary", "metric": value_column, "unit": "건", "yearNote": f"{periods[0]}~{periods[-1]}, 구별로 서로 다른 {len(periods)}개 기준월", "periods": periods, "districts": districts, "geojson": {"type": "FeatureCollection", "features": features}, "comparisonNote": "25개 구의 기준월이 서로 다르다. 같은 시점의 구별 물류 수요 비교나 우선순위로 해석할 수 없으며 경유지 총건수를 배송 완료 건수로 바꾸어 읽지 않는다.", "geometryNote": "지도에 사용한 서울 자치구 경계는 2013년 기준이다."}
 
 
 def freight_od(path: Path, expected_path: Path | None):
@@ -213,7 +213,7 @@ def road_data(path: Path, selected_lines):
     for entry in all_sections:
         for metric, rank_name in (("smallMedium", "rankSmallMedium"), ("large", "rankLarge")):
             entry[rank_name] = 1 + sum(other[metric] > entry[metric] for other in all_sections)
-    return {"year": 2021, "unit": "대 (수시조사 시간=계, 기점·종점 합계)", "sourceId": "highway2021", "sourceRowCount": len(source), "totalDirectionRows": len(selected), "sectionCount": int(selected["구간"].nunique()), "features": features, "allSections": all_sections, "groupCounts": counts, "selectionNote": "2022년 노트북에서 수동 선택한 고정 구간 집합. 전체 531개 구간의 양방향 합계 순위로 자동 선정한 상위 N개가 아니다.", "rankingNote": "전체 구간 순위는 531개 구간의 양방향 합계 기준. 방향별 순위는 1,062개 방향행 기준. 큰 값부터 정렬하며 동률은 같은 순위, 다음 순위는 동률 개수만큼 건너뛴다.", "aggregationNote": "시간=계인 기점·종점 두 행의 차종별 대수를 합산. 3~7종=당시 연구의 중소형화물, 8~12종=대형화물. 차종의 공식 분류 명칭을 재정의하지 않는다. 연간 총대수 또는 연평균 일교통량으로 해석하지 않는다.", "geometryNote": "2022년 노트북에 입력한 대략적 양 끝점 좌표를 직선으로 연결. 실제 도로 경로·지하터널 노선이 아니다. 좌표가 있는 당시 선택 40개 구간만 지도에 표시하며 전체 531개 구간은 표에서 조회한다."}
+    return {"year": 2021, "unit": "대 (수시조사 시간=계, 기점·종점 합계)", "sourceId": "highway2021", "sourceRowCount": len(source), "totalDirectionRows": len(selected), "sectionCount": int(selected["구간"].nunique()), "features": features, "allSections": all_sections, "groupCounts": counts, "selectionNote": "분석 과정에서 수동 선택한 고정 구간 집합. 전체 531개 구간의 양방향 합계 순위로 자동 선정한 상위 N개가 아니다.", "rankingNote": "전체 구간 순위는 531개 구간의 양방향 합계 기준. 방향별 순위는 1,062개 방향행 기준. 큰 값부터 정렬하며 동률은 같은 순위, 다음 순위는 동률 개수만큼 건너뛴다.", "aggregationNote": "시간=계인 기점·종점 두 행의 차종별 대수를 합산. 3~7종=연구에서 분류한 중소형화물, 8~12종=대형화물. 차종의 공식 분류 명칭을 재정의하지 않는다. 연간 총대수 또는 연평균 일교통량으로 해석하지 않는다.", "geometryNote": "연구 노트북에 입력한 대략적 양 끝점 좌표를 직선으로 연결. 실제 도로 경로·지하터널 노선이 아니다. 좌표가 있는 연구 선정 40개 구간만 지도에 표시하며 전체 531개 구간은 표에서 조회한다."}
 
 
 def export_csv(data, directory: Path):
@@ -229,7 +229,7 @@ def export_csv(data, directory: Path):
     sections = data["roads"]["allSections"]
     tables.append(("roads_2021_sections.csv", "2021년 도로 531구간 양방향 합계", "대", ["id", "section", "route", "small_medium_classes_3_7", "large_classes_8_12", "all_vehicle_classes", "rank_small_medium_531", "rank_large_531", "selection_groups"], [[x["id"], x["name"], x["route"], x["smallMedium"], x["large"], x["totalVehicles"], x["rankSmallMedium"], x["rankLarge"], "|".join(x["groups"])] for x in sections]))
     tables.append(("roads_2021_directions.csv", "2021년 도로 1,062방향 집계", "대", ["section_id", "section", "route", "direction", "small_medium_classes_3_7", "large_classes_8_12", "all_vehicle_classes", "rank_small_medium_1062", "rank_large_1062"], [[x["id"], x["name"], x["route"], row["direction"], row["smallMedium"], row["large"], row["totalVehicles"], row["rankSmallMedium"], row["rankLarge"]] for x in sections for row in x["directions"]]))
-    tables.append(("facilities_2022.csv", "2022년 연구용 물류시설 20곳·항만 2곳", "근사 좌표", ["id", "name", "type", "latitude", "longitude", "note"], [[x["id"], x["name"], x["type"], *x["coordinates"], x["note"]] for x in data["facilities"]]))
+    tables.append(("facilities_2022.csv", "연구용 물류시설 20곳·항만 2곳", "근사 좌표", ["id", "name", "type", "latitude", "longitude", "note"], [[x["id"], x["name"], x["type"], *x["coordinates"], x["note"]] for x in data["facilities"]]))
     tables.append(("postal_2020_regions.csv", "2020년 우체국 8권역 배달물량", "개", ["region", "postal_office", "year", "volume", "source_snapshot"], [[x["name"], x["postalOffice"], 2020, x["postal2020"], "20210831"] for x in data["regions"]]))
     downloads = []
     for filename, title, unit, header, rows in tables:
@@ -281,8 +281,8 @@ def build(args):
     data = {
         "schemaVersion": 2,
         "publicationReady": all(x["status"] in {"reviewed_for_publication", "user_confirmed_for_publication"} for x in sources if x["derivedDataPublished"]),
-        "publicationBasis": {"type": "project_owner_confirmation", "confirmedAt": "2026-10-14", "officialApprovalVerified": False, "note": "2026-10-14 프로젝트 작성자의 자료 사용 확인을 반영해 공개 범위에 포함."},
-        "project": {"title": "지하물류체계 구축을 위한 물동량 집중 구간 탐구", "year": 2022, "scope": "2022년 2학기 탐색적 시각화 연구 아카이브"},
+        "publicationBasis": {"type": "project_owner_confirmation", "confirmedAt": "2026-10-14", "officialApprovalVerified": False, "note": "프로젝트 작성자의 자료 사용 확인에 근거해 제공."},
+        "project": {"title": "지하물류체계 구축을 위한 물동량 집중 구간 탐구", "year": 2022, "scope": "물동량 집중 구간을 탐색하는 공간 분석 및 시각화"},
         "sources": sources,
         "regions": regions,
         "postal": {"year": 2020, "unit": "개", "sourceId": "postal2020", "includedTotal": sum(x["postal2020"] for x in regions), "nationalTotal": int(postal_row["총계"]), "excludedJeju": int(postal_row["제주지방우정청"]), "revisionNote": args.postal_note},
@@ -293,12 +293,12 @@ def build(args):
         "limitations": [
             "CJ 자료는 구마다 기준월이 다른 25개 관측값이다. 동일 시점의 구별 수요 비교나 배송 완료 건수로 해석할 수 없다.",
             "2020년 화물 수송량·우체국 배달물량, 2021년 도로 교통량, CJ 경유지 총건수는 서로 다른 지표로 직접 합산할 수 없다.",
-            "지역 대표점·도로 양 끝점·시설 위치는 2022년 노트북에 입력한 근사 좌표다. 서울 자치구 경계는 2013년 기준이다.",
-            "지도에 표시하는 도로 40구간은 당시 수동 선택 결과다. 전체 531개 구간 순위와 방향별 1,062행 순위는 표에서 별도로 조회한다.",
+            "지역 대표점·도로 양 끝점·시설 위치는 연구 노트북에 입력한 근사 좌표다. 서울 자치구 경계는 2013년 기준이다.",
+            "지도에 표시하는 도로 40구간은 분석 과정의 수동 선택 결과다. 전체 531개 구간 순위와 방향별 1,062행 순위는 표에서 별도로 조회한다.",
             "개인 대표자 성명·전화번호·학번·타학생 자료·수업자료는 공개 산출물에 포함하지 않는다.",
             "이 자료는 지하화 전환 수요, 공사비, 지질·지하공간, 경제성 또는 최적 노선을 검증하지 않는다.",
         ],
-        "provenance": {"geometry": "2022년 기말과제 노트북의 좌표·선 선택·주석 시설명을 추출하고 저장 지도 HTML의 GeoJSON을 읽음. 원본 코드·HTML은 실행하지 않음.", "notebookSha256": sha256(args.notebook), "odValidationCells": 64 if args.expected_od and not args.exclude_od else None},
+        "provenance": {"geometry": "연구 노트북의 좌표·선 선택·주석 시설명을 추출하고 지도 HTML의 GeoJSON을 읽음. 노트북 코드·HTML은 실행하지 않음.", "notebookSha256": sha256(args.notebook), "odValidationCells": 64 if args.expected_od and not args.exclude_od else None},
     }
     if args.exclude_od:
         data["limitations"].insert(0, "이 사용자 지정 빌드는 --exclude-od 옵션에 따라 화물 OD 수치를 생략했다.")
@@ -311,14 +311,14 @@ def build(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-dir", type=Path, required=True, help="Local directory containing the four source datasets; input files are not copied")
-    parser.add_argument("--notebook", type=Path, required=True, help="Original local 2022 notebook, used only for coordinates/selection")
+    parser.add_argument("--notebook", type=Path, required=True, help="Local research notebook, used only for coordinates/selection")
     parser.add_argument("--output", type=Path, required=True, help="Destination research.json")
     parser.add_argument("--map-html", type=Path, help="Original df_map1.html for its embedded Seoul boundaries; defaults beside the notebook")
     parser.add_argument("--exclude-od", action="store_true", help="Optionally omit OD values from a custom rebuild")
     parser.add_argument("--expected-od", type=Path, help="Optional original df_final.xlsx for independent 64-cell reconciliation")
     parser.add_argument("--postal-file", type=Path, help="Explicit substitute postal CSV")
     parser.add_argument("--postal-encoding", default="cp949")
-    parser.add_argument("--postal-note", default="2022년 연구 폴더에 보관된 2021-08-31 파일의 2020년 값(전국 181,675,471개). 2026년 공개본의 2020년 전국 합계는 176,748,550개로 다르며, 이 아카이브는 당시 파일값을 유지한다.")
+    parser.add_argument("--postal-note", default="2021-08-31 제공 파일의 2020년 값(전국 181,675,471개)을 사용한다. 배포 파일 버전에 따라 같은 기준연도의 값이 달라질 수 있으므로, 이 분석은 해당 파일을 기준으로 한다.")
     parser.add_argument("--source-metadata", type=Path, help="JSON array of reviewed source metadata; never grants publication permission by itself")
     build(parser.parse_args())
 
